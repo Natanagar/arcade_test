@@ -1,3 +1,14 @@
+const enemies = 3;
+const playerList = [
+'images/char-boy.png',
+'images/char-cat-girls.png',
+'images/char-horn-girl.png',
+'images/char-pink-girl.png',
+'images/char-princess-gilr.png'
+];
+let enemy;
+let allEnemies = [];
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -20,6 +31,23 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+class Player {
+    constructor(playerlist){
+        this.player = this.playerList;
+    }
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    update(){
+
+    }
+    handleInput(){
+
+    }
+
+}
+let player = new Player();
 
 // Now write your own player class
 // This class requires an update(), render() and
