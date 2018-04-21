@@ -4,7 +4,7 @@ const playerList = [
 'images/char-cat-girls.png',
 'images/char-horn-girl.png',
 'images/char-pink-girl.png',
-'images/char-princess-gilr.png'
+'images/char-princess-girl.png'
 ];
 
 let allEnemies = [],
@@ -12,7 +12,9 @@ let allEnemies = [],
     speed,
     player,
     image,
-    ctx;
+    dx,
+    dy;
+    //ctx;
 
 // Enemies our player must avoid
 // Variables applied to each of our instances go here,
@@ -21,48 +23,71 @@ let allEnemies = [],
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
 class Enemy{
-    constructor(sprite, x,y, speed){
-        this, sprite = 'images/enemy-bug.png';
+    constructor(x, y, speed){
+        this.sprite = 'images/enemy-bug.png';
         this.x = x;
         this.y = y;
-        this.speed = speed;//context
+        this.speed = speed;
     }
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
-    update (){
-        this.x += dt * this.speed;
+
+    update (dt){
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
+        this.x += dt * this.speed;
+
     }
     // Draw the enemy on the screen, required method for game
     render(){
-       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        //console.log(this.sprite);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
 
 
 
-class Player extends Enemy{
+class Player {
+    constructor(x, y){
+        this.sprite = 'images/char-boy.png';
+        this.x = x;
+        this.y = y;
+        this.dx = 0;
+        this.dy = 0;
+
+    }
 
     update(){
-
+        //this.x += dt * this.speed;
+        this.x += this.dx;
+        this.y += this.dy;
+        this.dx = 0;
+        this.dy = 0;
     }
     render(){
-        console.log(this);
-        super.render();
-        //console.log(player);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
     }
 
 
-    handleInput(){
-
+    handleInput(allowedKeys){
+        // player's movement
+        // if allowedKeys = 37, move to left
+        if(true){
+            this.dy += -80;
+        }
     }
 
 }
-player = new Player(this.sprite = 'images/char-boy.png', 200, 200);
-let enemy = new Enemy(this.sprite, 40, 40, 0);
+player = new Player(200, 380);
+let enemy = new Enemy(-100, 50, 50);
+let enemy2 = new Enemy(-100, 140, 100);
+let enemy3 = new Enemy(-100, 220, 250);
+//let enemy = new Enemy(150, 150, 0);
 allEnemies.push(enemy);
+allEnemies.push(enemy2);
+allEnemies.push(enemy3);
 //player.render();
 
 

@@ -150,11 +150,11 @@ var Engine = (function(global) {
          * the render function you have defined.
          */
         allEnemies.forEach(function(enemy) {
-            enemy.render.call(ctx);
+            enemy.render();
         });
 
         //player.render();
-        player.render.call(ctx);
+        player.render();
     }
 
     /* This function does nothing but it could have been a good place to
