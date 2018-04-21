@@ -6,48 +6,65 @@ const playerList = [
 'images/char-pink-girl.png',
 'images/char-princess-gilr.png'
 ];
-let enemy;
-let allEnemies = [];
+
+let allEnemies = [],
+    dt,
+    speed,
+    player,
+    image,
+    ctx;
 
 // Enemies our player must avoid
-var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+// Variables applied to each of our instances go here,
+// we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-};
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-};
-
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-class Player {
-    constructor(playerlist){
-        this.player = this.playerList;
+class Enemy{
+    constructor(sprite, x,y, speed){
+        this, sprite = 'images/enemy-bug.png';
+        this.x = x;
+        this.y = y;
+        this.speed = speed;//context
     }
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
+    update (){
+        this.x += dt * this.speed;
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+    }
+    // Draw the enemy on the screen, required method for game
     render(){
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+}
+
+
+
+class Player extends Enemy{
+
     update(){
 
     }
+    render(){
+        console.log(this);
+        super.render();
+        //console.log(player);
+    }
+
+
     handleInput(){
 
     }
 
 }
-let player = new Player();
+player = new Player(this.sprite = 'images/char-boy.png', 200, 200);
+let enemy = new Enemy(this.sprite, 40, 40, 0);
+allEnemies.push(enemy);
+//player.render();
+
 
 // Now write your own player class
 // This class requires an update(), render() and
