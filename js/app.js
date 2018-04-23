@@ -74,13 +74,20 @@ class Player {
     handleInput(allowedKeys){
         // player's movement
         // if allowedKeys = 37, move to left
-        if(true){
-            this.dy += -80;
+        console.log(allowedKeys);
+        if(true && allowedKeys == "up"){
+            this.dy += -87;
+        } else if(true && allowedKeys == "down"){
+            this.dy += 87;
+        } else if(true && allowedKeys == "left"){
+            this.dx += -87;
+        } else if (true && allowedKeys == "right"){
+            this.dx += 87;
         }
     }
 
 }
-player = new Player(200, 380);
+player = new Player(200, 375);
 let enemy = new Enemy(-100, 50, 50);
 let enemy2 = new Enemy(-100, 140, 100);
 let enemy3 = new Enemy(-100, 220, 250);
