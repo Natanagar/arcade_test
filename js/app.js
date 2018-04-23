@@ -13,8 +13,15 @@ let allEnemies = [],
     player,
     image,
     dx,
-    dy;
+    dy,
+    firstPosition,
+    deltaPosition,
+    maxPosition = {
+        x : 505,
+        y : 606
+    };
     //ctx;
+
 
 // Enemies our player must avoid
 // Variables applied to each of our instances go here,
@@ -43,28 +50,42 @@ class Enemy{
     render(){
         //console.log(this.sprite);
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        }
     }
-}
 
 
 
 class Player {
-    constructor(x, y){
+    constructor(x, y, maxPosition){
         this.sprite = 'images/char-boy.png';
         this.x = x;
         this.y = y;
         this.dx = 0;
         this.dy = 0;
 
+
+    }
+    getNewPosition(firstPosition, deltaPosition){
+    let newPosition = (firstPosition + deltaPosition);
+
+    if (newPosition<=-100 || newPosition >= 405){
+        this.x = 200;
+        this.y = 375;
+        this.dx = 0;
+        this.dy = 0;
+       }
     }
 
     update(){
-        //this.x += dt * this.speed;
+        //this.x += dt * this.speed
+
         this.x += this.dx;
         this.y += this.dy;
         this.dx = 0;
         this.dy = 0;
+        this.getNewPosition(this.x, this.dx);
     }
+
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -80,9 +101,9 @@ class Player {
         } else if(true && allowedKeys == "down"){
             this.dy += 83;
         } else if(true && allowedKeys == "left"){
-            this.dx += -99;
+            this.dx += -101;
         } else if (true && allowedKeys == "right"){
-            this.dx += 99;
+            this.dx += 101;
         }
     }
 
