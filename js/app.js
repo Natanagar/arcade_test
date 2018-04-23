@@ -76,13 +76,13 @@ class Player {
         // if allowedKeys = 37, move to left
         console.log(allowedKeys);
         if(true && allowedKeys == "up"){
-            this.dy += -87;
+            this.dy += -83;
         } else if(true && allowedKeys == "down"){
-            this.dy += 87;
+            this.dy += 83;
         } else if(true && allowedKeys == "left"){
-            this.dx += -87;
+            this.dx += -99;
         } else if (true && allowedKeys == "right"){
-            this.dx += 87;
+            this.dx += 99;
         }
     }
 
