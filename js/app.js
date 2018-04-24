@@ -19,7 +19,7 @@ let allEnemies = [],
     maxGameboard
     maxPosition = {
         x : 404,
-        y : 500
+        y : 400
     };
     //ctx;
 
@@ -74,11 +74,15 @@ class Player {
         maxGameboard = maxPosition.y;
     }
 
-        if (position<=-100 || position >= maxGameboard){
+        if (position<= -80 || position >= maxGameboard){
             this.x = 200;
             this.y = 375;
 
         }
+    }
+
+    checkCollision(){
+
     }
 
     update(){
