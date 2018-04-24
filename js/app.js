@@ -16,8 +16,9 @@ let allEnemies = [],
     dy,
     firstPosition,
     deltaPosition,
+    maxGameboard
     maxPosition = {
-        x : 505,
+        x : 404,
         y : 606
     };
     //ctx;
@@ -56,7 +57,7 @@ class Enemy{
 
 
 class Player {
-    constructor(x, y, maxPosition){
+    constructor(x, y){
         this.sprite = 'images/char-boy.png';
         this.x = x;
         this.y = y;
@@ -65,15 +66,16 @@ class Player {
 
 
     }
-    getNewPosition(firstPosition, deltaPosition){
-    let newPosition = (firstPosition + deltaPosition);
-
-    if (newPosition<=-100 || newPosition >= 405){
+    getNewPosition(position, maxGameboard){
+        //console.log(maxPosition);
+    if (position == this.x){
+        maxGameboard = maxPosition.x;
+        if (position<=-100 || position >= maxGameboard){
         this.x = 200;
         this.y = 375;
-        this.dx = 0;
-        this.dy = 0;
        }
+    }
+
     }
 
     update(){
@@ -81,9 +83,10 @@ class Player {
 
         this.x += this.dx;
         this.y += this.dy;
+        this.getNewPosition(this.x, maxPosition.x);
+        this.getNewPosition(this.y, maxPosition.y);
         this.dx = 0;
         this.dy = 0;
-        this.getNewPosition(this.x, this.dx);
     }
 
     render(){
