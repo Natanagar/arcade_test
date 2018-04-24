@@ -105,18 +105,18 @@ class Player {
     checkCollisionSideByPlayer(){
         //console.log(player.x1, player.x2);
         for(let enemy of allEnemies){
-            if(!(enemy.x2 < this.x1 || enemy.x1 > this.x2)){
-                if (!(enemy.y2 < this.y1 || enemy.y1 > this.y2)){
+          if(!(enemy.x2 < this.x1 || enemy.x2 > this.x2)){
+                if(!(enemy.y2 < this.y1 || enemy.y1 > this.y2)){
                     console.log("Collision");
                     this.x = 200;
                     this.y = 375;
                     this.calculatePlayerCoordinates();
                 }
-            }
-            //console.log (enemy.x1);
-        }
 
+          }
+        }
     }
+
 
 
 
