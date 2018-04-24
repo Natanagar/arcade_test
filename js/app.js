@@ -19,7 +19,7 @@ let allEnemies = [],
     maxGameboard
     maxPosition = {
         x : 404,
-        y : 606
+        y : 500
     };
     //ctx;
 
@@ -70,12 +70,15 @@ class Player {
         //console.log(maxPosition);
     if (position == this.x){
         maxGameboard = maxPosition.x;
-        if (position<=-100 || position >= maxGameboard){
-        this.x = 200;
-        this.y = 375;
-       }
+    } else {
+        maxGameboard = maxPosition.y;
     }
 
+        if (position<=-100 || position >= maxGameboard){
+            this.x = 200;
+            this.y = 375;
+
+        }
     }
 
     update(){
