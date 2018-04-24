@@ -21,6 +21,7 @@ let allEnemies = [],
         x : 404,
         y : 400
     };
+
     //ctx;
 
 
@@ -35,16 +36,26 @@ class Enemy{
         this.sprite = 'images/enemy-bug.png';
         this.x = x;
         this.y = y;
+        this.calculateEnemyCoordinates();
         this.speed = speed;
     }
+
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
-
+    calculateEnemyCoordinates(){
+        // (x1,y1) - left upper point of the bug figure
+        this.x1 = this.x + 2;
+        this.y1 = this.y + 78;
+        // (x2,y2) - right lower point of the bug figure
+        this.x2 = this.x1 + 96;
+        this.y2 = this.y1 + 66;
+    }
     update (dt){
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
         this.x += dt * this.speed;
+        this.calculateEnemyCoordinates();
 
     }
     // Draw the enemy on the screen, required method for game
@@ -58,16 +69,26 @@ class Enemy{
 
 class Player {
     constructor(x, y){
+        // actual char-boy.png figure width = 68 px, height = 75 px
         this.sprite = 'images/char-boy.png';
         this.x = x;
         this.y = y;
+        this.calculatePlayerCoordinates();
         this.dx = 0;
         this.dy = 0;
-
-
     }
+
+    calculatePlayerCoordinates(){
+       // (x1,y1) - left upper point of the boy figure
+        this.x1 = this.x + 19;
+        this.y1 = this.y + 64;
+        // (x2,y2) - left upper point of the boy figure
+        this.x2 = this.x1 + 68;
+        this.y2 = this.y1 + 75;
+    }
+
     getNewPosition(position, maxGameboard){
-        //console.log(maxPosition);
+        //console.log(allowedKeys);
     if (position == this.x){
         maxGameboard = maxPosition.x;
     } else {
@@ -81,9 +102,15 @@ class Player {
         }
     }
 
-    checkCollision(){
+    checkCollisionSideByPlayer(){
+        console.log(player.x1, player.x2);
+        for(let enemy of allEnemies){
+            console.log (enemy.x1);
+        }
 
     }
+
+
 
     update(){
         //this.x += dt * this.speed
@@ -92,8 +119,11 @@ class Player {
         this.y += this.dy;
         this.getNewPosition(this.x, maxPosition.x);
         this.getNewPosition(this.y, maxPosition.y);
+
         this.dx = 0;
         this.dy = 0;
+        this.calculatePlayerCoordinates();
+        this.checkCollisionSideByPlayer(allEnemies, player);
     }
 
     render(){
@@ -105,7 +135,7 @@ class Player {
     handleInput(allowedKeys){
         // player's movement
         // if allowedKeys = 37, move to left
-        console.log(allowedKeys);
+        //console.log(allowedKeys);
         if(true && allowedKeys == "up"){
             this.dy += -83;
         } else if(true && allowedKeys == "down"){
