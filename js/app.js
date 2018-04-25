@@ -16,11 +16,13 @@ let allEnemies = [],
     dy,
     firstPosition,
     deltaPosition,
-    maxGameboard
+    maxGameboard,
+    counterLife = 5,
+    counterCollision = 0,
     maxPosition = {
         x : 404,
         y : 400
-    };
+    }; //actual position y 400
 
     //ctx;
 
@@ -50,12 +52,19 @@ class Enemy{
         this.x2 = this.x1 + 96;
         this.y2 = this.y1 + 66;
     }
+    checkCoordinats(x,y){
+        if (this.x >=520){
+            this.x = -100;
+            console.log("enemy came out for edge");
+        }
+    }
     update (dt){
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
         this.x += dt * this.speed;
         this.calculateEnemyCoordinates();
+        this.checkCoordinats();
 
     }
     // Draw the enemy on the screen, required method for game
@@ -76,15 +85,17 @@ class Player {
         this.calculatePlayerCoordinates();
         this.dx = 0;
         this.dy = 0;
+        this.counterLife = counterLife;
+        this.counterCollision = counterCollision;
     }
 
     calculatePlayerCoordinates(){
        // (x1,y1) - left upper point of the boy figure
         this.x1 = this.x + 19;
-        this.y1 = this.y + 64;
+        this.y1 = this.y + 80;// actual position +64
         // (x2,y2) - left upper point of the boy figure
         this.x2 = this.x1 + 68;
-        this.y2 = this.y1 + 75;
+        this.y2 = this.y1 + 61;// actual height +75
     }
 
     getNewPosition(position, maxGameboard){
@@ -96,8 +107,11 @@ class Player {
     }
 
         if (position<= -80 || position >= maxGameboard){
+
+            //counterLife += 1;
             this.x = 200;
             this.y = 375;
+            //console.log(counterLife);
 
         }
     }
@@ -105,8 +119,13 @@ class Player {
     checkCollisionSideByPlayer(){
         //console.log(player.x1, player.x2);
         for(let enemy of allEnemies){
+            //console.log(`'enemy x1' + ${Math.round(enemy.x1)} + 'enemy x2' + ${Math.round(enemy.x2)}`);
+            //console.log(`'enemy y1' + ${Math.round(enemy.y1)} + 'enemy y2' + ${Math.round(enemy.y2)}`);
+            //console.log(`'player.x1' + ${Math.round(this.x1)} + 'player.x2' + ${Math.round(this.x2)}`);
+            //console.log(`'player.y1' + ${Math.round(this.y1)} + 'player.y2' + ${Math.round(this.y2)}`);
           if(!(enemy.x2 < this.x1 || enemy.x2 > this.x2)){
                 if(!(enemy.y2 < this.y1 || enemy.y1 > this.y2)){
+                    console.log(enemy.y1, enemy.y2)
                     console.log("Collision");
                     this.x = 200;
                     this.y = 375;
@@ -159,7 +178,8 @@ class Player {
 player = new Player(200, 375);
 let enemy = new Enemy(-100, 50, 50);
 let enemy2 = new Enemy(-100, 140, 100);
-let enemy3 = new Enemy(-100, 220, 250);
+let enemy3 = new Enemy(-100, 220, 50);
+
 //let enemy = new Enemy(150, 150, 0);
 allEnemies.push(enemy);
 allEnemies.push(enemy2);
