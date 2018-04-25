@@ -59,7 +59,7 @@ class Enemy{
     checkCoordinats(x,y,speed){
         if (this.x >=520){
             this.x = -100;
-            this.speed = Math.round((Math.random()*100) + (Math.random()*100)); //actual version
+            this.speed = Math.round((Math.random()*250) + (Math.random()*100)); //actual version
             //console.log("enemy came out for edge");
         }
     }
@@ -135,18 +135,19 @@ class Player {
     checkCollisionSideByPlayer(){
         //console.log(player.x1, player.x2);
         for(let enemy of allEnemies){
-            //console.log(`'enemy x1' + ${Math.round(enemy.x1)} + 'enemy x2' + ${Math.round(enemy.x2)}`);
-            //console.log(`'enemy y1' + ${Math.round(enemy.y1)} + 'enemy y2' + ${Math.round(enemy.y2)}`);
-            //console.log(`'player.x1' + ${Math.round(this.x1)} + 'player.x2' + ${Math.round(this.x2)}`);
-            //console.log(`'player.y1' + ${Math.round(this.y1)} + 'player.y2' + ${Math.round(this.y2)}`);
-          if(!(enemy.x2 < this.x1 || enemy.x2 > this.x2)){
+          // Here was the error !!!!!
+          //if(!(enemy.x2 < this.x1 || enemy.x2 > this.x2)){
+            if(!(enemy.x2 < this.x1 || enemy.x1 > this.x2)){
                 if(!(enemy.y2 < this.y1 || enemy.y1 > this.y2)){
-                    console.log(enemy.y1, enemy.y2)
-                    console.log("Collision");
+                    console.log(`enemy__x2: ${Math.round(enemy.x2)} >= ${Math.round(this.x1)} :player_x1`);
+                    console.log(``);
+                    console.log(`player_x2: ${Math.round(this.x2)} >= ${Math.round(enemy.x1)} :enemy__x1`);
+                    console.log(``);
+                    console.log('================================================')
                     this.setPlayerCoordinates(200,375);
                 }
 
-          }
+            }
         }
     }
 
@@ -185,7 +186,7 @@ class Player {
 player = new Player(200, 375);
 let enemy = new Enemy(-100, 50, 50);
 let enemy2 = new Enemy(-100, 140, 100);
-let enemy3 = new Enemy(-100, 220, 50);
+let enemy3 = new Enemy(-100, 220, 250);
 
 //let enemy = new Enemy(150, 150, 0);
 allEnemies.push(enemy);
