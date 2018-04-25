@@ -56,7 +56,7 @@ class Enemy{
         if (this.x >=520){
             this.x = -100;
             this.speed = Math.round((Math.random()*100) + (Math.random()*100)); //actual version
-            console.log("enemy came out for edge");
+            //console.log("enemy came out for edge");
         }
     }
     update (dt){
@@ -116,6 +116,13 @@ class Player {
 
         }
     }
+    checkContactWithWater(x,y){
+
+        if(this.y < 42){
+            console.log('contact with water');
+            counterLife += 1;
+        }
+    }
 
     checkCollisionSideByPlayer(){
         //console.log(player.x1, player.x2);
@@ -145,6 +152,7 @@ class Player {
 
         this.x += this.dx;
         this.y += this.dy;
+        this.checkContactWithWater();
         this.getNewPosition(this.x, maxPosition.x);
         this.getNewPosition(this.y, maxPosition.y);
 
