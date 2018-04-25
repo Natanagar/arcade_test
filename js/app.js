@@ -121,6 +121,9 @@ class Player {
         if(this.y < 42){
             console.log('contact with water');
             counterLife += 1;
+            console.log(counterLife);
+            this.x = 200;
+            this.y = 375;
         }
     }
 
