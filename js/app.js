@@ -36,35 +36,42 @@ let allEnemies = [],
 class Enemy{
     constructor(x, y, speed){
         this.sprite = 'images/enemy-bug.png';
-        this.x = x;
-        this.y = y;
-        this.calculateEnemyCoordinates();
+        this.setEnemyY(y);
+        this.setEnemyX(x);
         this.speed = speed;
     }
 
-    // Update the enemy's position, required method for game
-    // Parameter: dt, a time delta between ticks
-    calculateEnemyCoordinates(){
-        // (x1,y1) - left upper point of the bug figure
-        this.x1 = this.x + 2;
+    setEnemyY(y){
+        // Enemy's Y coordinate stays the same during the game run
+        this.y = y;
         this.y1 = this.y + 78;
-        // (x2,y2) - right lower point of the bug figure
-        this.x2 = this.x1 + 96;
         this.y2 = this.y1 + 66;
     }
-    checkCoordinats(x,y, speed){
+
+    setEnemyX(x){
+        this.x = x;
+        // (x1,y1) - left upper point of the bug figure
+        this.x1 = this.x + 2;
+        // (x2,y2) - right lower point of the bug figure
+        this.x2 = this.x1 + 96;
+    }
+
+    checkCoordinats(x,y,speed){
         if (this.x >=520){
             this.x = -100;
             this.speed = Math.round((Math.random()*100) + (Math.random()*100)); //actual version
             //console.log("enemy came out for edge");
         }
     }
+
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
     update (dt){
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-        this.x += dt * this.speed;
-        this.calculateEnemyCoordinates();
+        // Enemy moves only to the right, y coordinate stays the same.
+        this.setEnemyX(this.x + dt * this.speed);
         this.checkCoordinats();
 
     }
@@ -81,17 +88,17 @@ class Player {
     constructor(x, y){
         // actual char-boy.png figure width = 68 px, height = 75 px
         this.sprite = 'images/char-boy.png';
-        this.x = x;
-        this.y = y;
-        this.calculatePlayerCoordinates();
+        this.setPlayerCoordinates(x,y);
         this.dx = 0;
         this.dy = 0;
         this.counterLife = counterLife;
         this.counterCollision = counterCollision;
     }
 
-    calculatePlayerCoordinates(){
-       // (x1,y1) - left upper point of the boy figure
+    setPlayerCoordinates(x,y){
+        this.x = x;
+        this.y = y;
+        // (x1,y1) - left upper point of the boy figure
         this.x1 = this.x + 19;
         this.y1 = this.y + 80;// actual position +64
         // (x2,y2) - left upper point of the boy figure
@@ -109,10 +116,8 @@ class Player {
 
         if (position<= -80 || position >= maxGameboard){
 
-            //counterLife += 1;
             this.x = 200;
             this.y = 375;
-            //console.log(counterLife);
 
         }
     }
@@ -138,31 +143,21 @@ class Player {
                 if(!(enemy.y2 < this.y1 || enemy.y1 > this.y2)){
                     console.log(enemy.y1, enemy.y2)
                     console.log("Collision");
-                    this.x = 200;
-                    this.y = 375;
-                    this.calculatePlayerCoordinates();
+                    this.setPlayerCoordinates(200,375);
                 }
 
           }
         }
     }
 
-
-
-
     update(){
-        //this.x += dt * this.speed
-
-        this.x += this.dx;
-        this.y += this.dy;
+        this.setPlayerCoordinates(this.x + this.dx,this.y + this.dy);
         this.checkContactWithWater();
         this.getNewPosition(this.x, maxPosition.x);
         this.getNewPosition(this.y, maxPosition.y);
-
+        this.checkCollisionSideByPlayer();
         this.dx = 0;
         this.dy = 0;
-        this.calculatePlayerCoordinates();
-        this.checkCollisionSideByPlayer();
     }
 
     render(){
