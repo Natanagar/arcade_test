@@ -52,9 +52,10 @@ class Enemy{
         this.x2 = this.x1 + 96;
         this.y2 = this.y1 + 66;
     }
-    checkCoordinats(x,y){
+    checkCoordinats(x,y, speed){
         if (this.x >=520){
             this.x = -100;
+            this.speed = Math.round((Math.random()*100) + (Math.random()*100)); //actual version
             console.log("enemy came out for edge");
         }
     }
