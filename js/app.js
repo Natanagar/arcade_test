@@ -126,9 +126,10 @@ class Player {
         if(this.y < 42){
             console.log('contact with water');
             counterLife += 1;
-            console.log(counterLife);
+            //console.log(counterLife);
             this.x = 200;
             this.y = 375;
+            return counterLife;
         }
     }
 
@@ -139,10 +140,10 @@ class Player {
           //if(!(enemy.x2 < this.x1 || enemy.x2 > this.x2)){
             if(!(enemy.x2 < this.x1 || enemy.x1 > this.x2)){
                 if(!(enemy.y2 < this.y1 || enemy.y1 > this.y2)){
-                    console.log(`enemy__x2: ${Math.round(enemy.x2)} >= ${Math.round(this.x1)} :player_x1`);
-                    console.log(``);
-                    console.log(`player_x2: ${Math.round(this.x2)} >= ${Math.round(enemy.x1)} :enemy__x1`);
-                    console.log(``);
+                    //console.log(`enemy__x2: ${Math.round(enemy.x2)} >= ${Math.round(this.x1)} :player_x1`);
+                    //console.log(``);
+                    //console.log(`player_x2: ${Math.round(this.x2)} >= ${Math.round(enemy.x1)} :enemy__x1`);
+                    //console.log(``);
                     console.log('================================================')
                     this.setPlayerCoordinates(200,375);
                 }
@@ -182,6 +183,18 @@ class Player {
         }
     }
 
+}
+//add to gamefield Stone
+class Stone(){
+    constructor(x,y,sprite){
+        this.x = x;
+        this.y = y;
+        this.sprite = sprite;
+    }
+    setStoneCoordinates(x,y){
+        this.dx = this.x+N; //actual position of figure stone by OX
+        this.dy = this.x+P; //actual position of fige stone by OY
+    }
 }
 player = new Player(200, 375);
 let enemy = new Enemy(-100, 50, 50);
