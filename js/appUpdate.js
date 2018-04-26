@@ -21,7 +21,7 @@ let allEnemies = [],
     counterCollision = 0,
     maxPosition = {
         x : 404,
-        y : 400
+        y : 600
     }; //actual position y 400
 
     //ctx;
@@ -116,8 +116,8 @@ class Player {
 
         if (position<= -80 || position >= maxGameboard){
 
-            this.x = 200;
-            this.y = 375;
+            this.x = 300;
+            this.y = 575;
 
         }
     }
@@ -127,7 +127,7 @@ class Player {
             console.log('contact with water');
             counterLife += 1;
             //console.log(counterLife);
-            this.x = 200;
+            this.x = 300;
             this.y = 375;
             return counterLife;
         }
@@ -145,7 +145,7 @@ class Player {
                     //console.log(`player_x2: ${Math.round(this.x2)} >= ${Math.round(enemy.x1)} :enemy__x1`);
                     //console.log(``);
                     console.log('================================================')
-                    this.setPlayerCoordinates(200,375);
+                    this.setPlayerCoordinates(200,575);
                 }
 
             }
@@ -187,7 +187,7 @@ class Player {
 //add to gamefield Stone
 class Stone {
     constructor(x,y,sprite){
-        this.sprite = 'images/Gem Orange.png';
+        this.sprite = 'images/stone-block.png';
         this.setStoneOX(x);
         this.setStoneOY(y);
    }
@@ -210,10 +210,11 @@ class Stone {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
-player = new Player(200, 375);
-let enemy = new Enemy(-100, 50, 50);
+player = new Player(300, 575);
+let enemy = new Enemy(-100, 300, 150);
 let enemy2 = new Enemy(-100, 140, 100);
 let enemy3 = new Enemy(-100, 220, 250);
+let enemy4 = new Enemy(-100, 380, 300);
 
 let stone = new Stone(106, 48);
 
@@ -221,6 +222,7 @@ let stone = new Stone(106, 48);
 allEnemies.push(enemy);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
+allEnemies.push(enemy4);
 //player.render();
 
 
