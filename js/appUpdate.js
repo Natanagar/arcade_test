@@ -20,7 +20,7 @@ let allEnemies = [],
     counterLife = 5,
     counterCollision = 0,
     maxPosition = {
-        x : 404,
+        x : 604,
         y : 600
     }; //actual position y 400
 
@@ -57,7 +57,7 @@ class Enemy{
     }
 
     checkCoordinats(x,y,speed){
-        if (this.x >=520){
+        if (this.x >=720){
             this.x = -100;
             this.speed = Math.round((Math.random()*250) + (Math.random()*100)); //actual version
             //console.log("enemy came out for edge");
@@ -117,18 +117,18 @@ class Player {
         if (position<= -80 || position >= maxGameboard){
 
             this.x = 300;
-            this.y = 575;
+            this.y = 555;
 
         }
     }
     checkContactWithWater(x,y){
 
-        if(this.y < 42){
+        if(this.y < 125){ //update actual coordinats for water blocks 42(1/2 height block)
             console.log('contact with water');
             counterLife += 1;
             //console.log(counterLife);
             this.x = 300;
-            this.y = 375;
+            this.y = 555;
             return counterLife;
         }
     }
@@ -145,7 +145,7 @@ class Player {
                     //console.log(`player_x2: ${Math.round(this.x2)} >= ${Math.round(enemy.x1)} :enemy__x1`);
                     //console.log(``);
                     console.log('================================================')
-                    this.setPlayerCoordinates(200,575);
+                    this.setPlayerCoordinates(300,555);
                 }
 
             }
@@ -210,7 +210,7 @@ class Stone {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
-player = new Player(300, 575);
+player = new Player(300, 555);
 let enemy = new Enemy(-100, 300, 150);
 let enemy2 = new Enemy(-100, 140, 100);
 let enemy3 = new Enemy(-100, 220, 250);
