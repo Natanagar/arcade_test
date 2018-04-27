@@ -97,6 +97,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+
         player.update();
         //console.log(player.x, enemy.x);
     }
@@ -169,6 +170,10 @@ var Engine = (function(global) {
 
         //player.render();
         player.render();
+        allRocks.forEach((rock) => {
+          rock.render();
+        })
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -188,6 +193,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
+        'images/Rock.png',
         'images/char-boy.png'
     ]);
     Resources.onReady(init);

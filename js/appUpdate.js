@@ -12,6 +12,7 @@ const playerList = [
 ];
 
 let allEnemies = [],
+    allRocks = [],
     dt,
     speed,
     player,
@@ -126,8 +127,10 @@ class Player {
         }
     }
     checkContactWithWater(x,y){
-
-        if(this.y < 125){ //update actual coordinats for water blocks 42(1/2 height block)
+        if (this.y > 839 && this.y < 1005){
+            console.log('contact with water');
+            console.log ('=======================');
+        } else if(this.y < 125){ //update actual coordinats for water blocks 42(1/2 height block)
             console.log('contact with water');
             counterLife += 1;
             //console.log(counterLife);
@@ -214,22 +217,55 @@ class Stone {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
+
+class Rock {
+    constructor(x, y){
+        this.sprite = 'images/Rock.png';
+        this.setRockY(y);
+        this.setRockX(x);
+
+
+    }
+     setRockY(y){
+        // Enemy's Y coordinate stays the same during the game run
+        this.y = y;
+        this.y1 = this.y + 67;
+        this.y2 = this.y1 + 155;
+    }
+
+    setRockX(x){
+        this.x = x;
+        // (x1,y1) - left upper point of the bug figure
+        this.x1 = this.x + 9;
+        // (x2,y2) - right lower point of the bug figure
+        this.x2 = this.x1 + 92;
+
+    }
+    render(){
+        //console.log (this.ctx);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    }
+
+}
 player = new Player(703, 1130);
-let enemy = new Enemy(-100, 801, 350);
+let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
 let enemy2 = new Enemy(-100, 561, 275);
 let enemy3 = new Enemy(-100, 626, 400);
 let enemy4 = new Enemy(-100, 712, 300);
 let enemy5 = new Enemy(1505, 712, -350);
 
 let stone = new Stone(106, 48);
-
-//let enemy = new Enemy(150, 150, 0);
+let rock = new Rock(300, 455);
+let rock1 = new Rock (710, 455);
+//rock.render(ctx);
+allRocks.push(rock);
+allRocks.push(rock1);
 allEnemies.push(enemy);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
 allEnemies.push(enemy4);
 allEnemies.push(enemy5);
-//player.render();
 
 
 // Now write your own player class
