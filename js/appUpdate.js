@@ -1,4 +1,8 @@
-const enemies = 3;
+const enemiesSprite = [
+    'images/enemy-bug.png',
+    'images/enemy-bug_invert.png'
+];
+console.dir(enemiesSprite);
 const playerList = [
 'images/char-boy.png',
 'images/char-cat-girls.png',
@@ -215,6 +219,7 @@ let enemy = new Enemy(-100, 801, 350);
 let enemy2 = new Enemy(-100, 561, 275);
 let enemy3 = new Enemy(-100, 626, 400);
 let enemy4 = new Enemy(-100, 712, 300);
+let enemy5 = new Enemy(1505, 712, -350);
 
 let stone = new Stone(106, 48);
 
@@ -223,6 +228,7 @@ allEnemies.push(enemy);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
 allEnemies.push(enemy4);
+allEnemies.push(enemy5);
 //player.render();
 
 
