@@ -24,8 +24,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 909; //actual position of canvas width 505;
-    canvas.height = 1010; //actual position of canvas width 606;
+    canvas.width = 1515; //actual position of canvas width 505;
+    canvas.height = 1515; //actual position of canvas width 606;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -112,19 +112,24 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
+                'images/grass-block.png',   // Row 1 of 2 of secondgrass
                 'images/water-block.png',   // Row 1 is 2 water
                 'images/water-block.png',   // Row 2 is 2 water
                 'images/grass-block.png',   // Row 1 of 2 of firstgrass
                 'images/grass-block.png',   // Row 2 of 2 of firstgrass
+                'images/water-block.png',   // Row 1 is 2 water
+                'images/water-block.png',   // Row 2 is 2 water
                 'images/stone-block.png',   // Row 1 of 4 of stone
                 'images/stone-block.png',   // Row 2 of 4 of stone
                 'images/stone-block.png',   // Row 3 of 4 of stone
                 'images/stone-block.png',   // Row 4 of 4 of stone
+                'images/water-block.png',   // Row 1 is 2 water
+                'images/water-block.png',   // Row 2 is 2 water
                 'images/grass-block.png',   // Row 1 of 2 of secondgrass
                 'images/grass-block.png'    // Row 2 of 2 of secondgrass
             ],
-            numRows = 10,//actual position 6
-            numCols = 9, //actual position 5
+            numRows = 15,//actual position 6
+            numCols = 15, //actual position 5
             row, col;
 
         // Before drawing, clear existing canvas
