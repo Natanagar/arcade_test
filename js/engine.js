@@ -99,6 +99,7 @@ var Engine = (function(global) {
         });
 
         player.update();
+
         //console.log(player.x, enemy.x);
     }
 

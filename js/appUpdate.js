@@ -13,6 +13,7 @@ const playerList = [
 
 let allEnemies = [],
     allRocks = [],
+    rock,
     dt,
     speed,
     player,
@@ -126,17 +127,33 @@ class Player {
 
         }
     }
+    checkCollisionWithRock(){
+        for(rock of allRocks){
+            console.log(rock);
+            //if(rock.x2 < this.x1 || rock.x1 > this.x2)||(rock.y2 < this.y1 || rock.y1 > this.y2){
+                  console.log('====Collision with rocks ====');
+                    //this.setPlayerCoordinates(703,1130);
+              //  }
+
+        }
+    }
     checkContactWithWater(x,y){
         if (this.y > 839 && this.y < 1005){
-            console.log('contact with water');
+            console.log(' 839 and 1005');
             console.log ('=======================');
-        } else if(this.y < 125){ //update actual coordinats for water blocks 42(1/2 height block)
-            console.log('contact with water');
+        } else if(this.y < 125 && this.y > 42){ //update actual coordinats for water blocks 42(1/2 height block)
+            console.log('42 and 125');
+            //checkcollision with rocks
+            this.checkCollisionWithRock();
             counterLife += 1;
             //console.log(counterLife);
-            this.x = 400;
-            this.y = 715;
+            //return to first position of player
+            this.x = 703;
+            this.y = 1130;
             return counterLife;
+        } else if(this.y > 374 && this.y<457){
+            console.log ('=======================');
+            console.log('374 and 457');
         }
     }
 
@@ -219,10 +236,11 @@ class Stone {
 }
 
 class Rock {
-    constructor(x, y){
+    constructor(x, y, speed){
         this.sprite = 'images/Rock.png';
         this.setRockY(y);
         this.setRockX(x);
+        this.speed = 20;
 
 
     }
@@ -241,6 +259,8 @@ class Rock {
         this.x2 = this.x1 + 92;
 
     }
+
+
     render(){
         //console.log (this.ctx);
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -256,11 +276,11 @@ let enemy4 = new Enemy(-100, 712, 300);
 let enemy5 = new Enemy(1505, 712, -350);
 
 let stone = new Stone(106, 48);
-let generateRock = function(x,y){
+let generateRock = function(rock,x,y){
     //number of quantity rocks
-    let rockAmount = Math.round(Math.random()*10);
+    let rockAmount = Math.round(Math.random()*3+7.5);
     //console.log(`rock amount ${rockAmount}`);
-    let newXCoordinates, newYCoordinates, rock, positionY;
+    let newXCoordinates, newYCoordinates, positionY;
     //OX coordinats from 0 till 1465
     //OY coordinats or 42 or 125;
     for (let i = 0; i<rockAmount; i++) {
@@ -269,25 +289,15 @@ let generateRock = function(x,y){
         if (positionY===1){
             newYCoordinates = 42
         } else newYCoordinates = 125;
-        console.log(newXCoordinates);
+        //console.log(newXCoordinates);
         rock = new Rock(newXCoordinates,newYCoordinates);
         allRocks.push(rock);
     }
-
+    return allRocks;
 
 }();
 
-let rock = new Rock(0, 42);
-let rock1 = new Rock (0, 125);
-//let rock2 = new Rock (567, 455);
-//let rock3 = new Rock (460, 870);
-//let rock4 = new Rock (1230, 870);
-//rock.render(ctx);
-allRocks.push(rock);
-allRocks.push(rock1);
-//allRocks.push(rock2);
-//allRocks.push(rock3);
-//allRocks.push(rock4);
+
 allEnemies.push(enemy);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
