@@ -210,10 +210,11 @@ class Player {
 }
 //add to gamefield Stone
 class Stone {
-    constructor(x,y,sprite){
-        this.sprite = 'images/stone-block.png';
+    constructor(x,y){
+
         this.setStoneOX(x);
         this.setStoneOY(y);
+        this.sprite = 'images/stone-block.png';
    }
 
     setStoneOX(x){
@@ -236,13 +237,10 @@ class Stone {
 }
 
 class Rock {
-    constructor(x, y, speed){
+    constructor(x, y){
         this.sprite = 'images/Rock.png';
         this.setRockY(y);
         this.setRockX(x);
-        this.speed = 20;
-
-
     }
      setRockY(y){
         // Enemy's Y coordinate stays the same during the game run
