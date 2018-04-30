@@ -129,18 +129,17 @@ class Player {
     }
     checkCollisionWithRock(){
         for(rock of allRocks){
-            console.log(rock);
-            //if(rock.x2 < this.x1 || rock.x1 > this.x2)||(rock.y2 < this.y1 || rock.y1 > this.y2){
+            if((rock.x2 < this.x1 || rock.x1 > this.x2)||(rock.y2 < this.y1 || rock.y1 > this.y2)){
                   console.log('====Collision with rocks ====');
                     //this.setPlayerCoordinates(703,1130);
-              //  }
-
+              }
         }
     }
     checkContactWithWater(x,y){
         if (this.y > 839 && this.y < 1005){
             console.log(' 839 and 1005');
             console.log ('=======================');
+
         } else if(this.y < 125 && this.y > 42){ //update actual coordinats for water blocks 42(1/2 height block)
             console.log('42 and 125');
             //checkcollision with rocks
@@ -154,6 +153,7 @@ class Player {
         } else if(this.y > 374 && this.y<457){
             console.log ('=======================');
             console.log('374 and 457');
+
         }
     }
 
