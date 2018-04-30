@@ -2,7 +2,7 @@ const enemiesSprite = [
     'images/enemy-bug.png',
     'images/enemy-bug_invert.png'
 ];
-console.dir(enemiesSprite);
+//console.dir(enemiesSprite);
 const playerList = [
 'images/char-boy.png',
 'images/char-cat-girls.png',
@@ -13,6 +13,8 @@ const playerList = [
 
 let allEnemies = [],
     allRocks = [],
+    allStars = [],
+    star,
     rock,
     dt,
     speed,
@@ -209,7 +211,7 @@ class Player {
 
 }
 //add to gamefield Stone
-class Stone {
+/*class Stone {
     constructor(x,y){
 
         this.setStoneOX(x);
@@ -232,9 +234,9 @@ class Stone {
 
     render(){
         //console.log(this.sprite);
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        ctx.drawImage(Resources.get(this.sprite, this.x, this.y);
     }
-}
+}*/
 
 class Rock {
     constructor(x, y){
@@ -266,14 +268,6 @@ class Rock {
     }
 
 }
-player = new Player(703, 1130);
-let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
-let enemy2 = new Enemy(-100, 561, 275);
-let enemy3 = new Enemy(-100, 626, 400);
-let enemy4 = new Enemy(-100, 712, 300);
-let enemy5 = new Enemy(1505, 712, -350);
-
-let stone = new Stone(106, 48);
 let generateRock = function(rock,x,y){
     //number of quantity rocks
     let rockAmount = Math.round(Math.random()*3+7.5);
@@ -294,6 +288,50 @@ let generateRock = function(rock,x,y){
     return allRocks;
 
 }();
+
+class Star{
+    constructor(x,y){
+        this.sprite = 'images/Star.png';
+        this.setStarY(y);
+        this.setStarX(x);
+    }
+     setStarY(y){
+        // Enemy's Y coordinate stays the same during the game run
+        this.y = y;
+        this.y1 = this.y + 65;
+        this.y2 = this.y1 + 92;
+    }
+
+    setStarX(x){
+        this.x = x;
+        // (x1,y1) - left upper point of the bug figure
+        this.x1 = this.x + 5;
+        // (x2,y2) - right lower point of the bug figure
+        this.x2 = this.x1 + 92;
+
+    }
+
+
+    render(){
+        //console.log (this.ctx);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    }
+}
+star = new Star(156, 42);
+star1 = new Star(550, 42);
+allStars.push(star);
+allStars.push(star1);
+console.dir(allStars);
+player = new Player(703, 1130);
+let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
+let enemy2 = new Enemy(-100, 561, 275);
+let enemy3 = new Enemy(-100, 626, 400);
+let enemy4 = new Enemy(-100, 712, 300);
+let enemy5 = new Enemy(1505, 712, -350);
+
+//let stone = new Stone(106, 48);
+
 
 
 allEnemies.push(enemy);

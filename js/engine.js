@@ -169,11 +169,21 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+
+
         //player.render();
         player.render();
         allRocks.forEach((rock) => {
           rock.render();
-        })
+        });
+
+
+        //star render
+        /*allStars.forEach((star) => {
+          star.render();
+        });*/
+
+
 
     }
 
