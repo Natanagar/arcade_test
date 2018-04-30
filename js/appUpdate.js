@@ -256,11 +256,34 @@ let enemy4 = new Enemy(-100, 712, 300);
 let enemy5 = new Enemy(1505, 712, -350);
 
 let stone = new Stone(106, 48);
-let rock = new Rock(300, 455);
-let rock1 = new Rock (710, 455);
+let generateRock = function(x,y){
+    //number of quantity rocks
+    let rockAmount = Math.round(Math.random()*10);
+    console.log(`rock amount ${rockAmount}`);
+    //OX coordinats from 0 till 1465
+    //OY coordinats or 42 or 125;
+    let newXCoordinates = (Math.round((Math.random()*15))*101);
+    let positionY = Math.round((Math.random()*2 + 0.5));
+    if (positionY===1){
+        newYCoordinates = 42
+    } else newYCoordinates = 125;
+    console.log(newXCoordinates);
+    let rock = new Rock(newXCoordinates,newYCoordinates);
+    allRocks.push(rock);
+
+}();
+
+let rock = new Rock(0, 42);
+let rock1 = new Rock (0, 125);
+//let rock2 = new Rock (567, 455);
+//let rock3 = new Rock (460, 870);
+//let rock4 = new Rock (1230, 870);
 //rock.render(ctx);
 allRocks.push(rock);
 allRocks.push(rock1);
+//allRocks.push(rock2);
+//allRocks.push(rock3);
+//allRocks.push(rock4);
 allEnemies.push(enemy);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
