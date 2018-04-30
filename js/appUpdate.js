@@ -259,17 +259,21 @@ let stone = new Stone(106, 48);
 let generateRock = function(x,y){
     //number of quantity rocks
     let rockAmount = Math.round(Math.random()*10);
-    console.log(`rock amount ${rockAmount}`);
+    //console.log(`rock amount ${rockAmount}`);
+    let newXCoordinates, newYCoordinates, rock, positionY;
     //OX coordinats from 0 till 1465
     //OY coordinats or 42 or 125;
-    let newXCoordinates = (Math.round((Math.random()*15))*101);
-    let positionY = Math.round((Math.random()*2 + 0.5));
-    if (positionY===1){
-        newYCoordinates = 42
-    } else newYCoordinates = 125;
-    console.log(newXCoordinates);
-    let rock = new Rock(newXCoordinates,newYCoordinates);
-    allRocks.push(rock);
+    for (let i = 0; i<rockAmount; i++) {
+        newXCoordinates = (Math.round((Math.random()*15))*101);
+        positionY = Math.round((Math.random()*2 + 0.5));
+        if (positionY===1){
+            newYCoordinates = 42
+        } else newYCoordinates = 125;
+        console.log(newXCoordinates);
+        rock = new Rock(newXCoordinates,newYCoordinates);
+        allRocks.push(rock);
+    }
+
 
 }();
 
