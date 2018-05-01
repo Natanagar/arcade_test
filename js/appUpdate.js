@@ -320,10 +320,25 @@ class Star{
 
     }
 }
-star = new Star(303, 0);
-star1 = new Star(505, 0);
-allStars.push(star);
-allStars.push(star1);
+
+let generateStars = function(star,x,y){
+    //number of quantity rocks
+    let starAmount = Math.round(Math.random()*5+0.5);
+    //console.log(`star amount ${starAmount}`);
+
+    //coordinates by OX with Math.random(), coordinates by OY = 0;
+    let newXCoordinates, positionY, newYCoordinates = -12;
+    for (let i = 0; i<= starAmount; i++) {
+        newXCoordinates = (Math.round((Math.random()*15))*101);
+        star = new Star(newXCoordinates, newYCoordinates);
+        allStars.push(star);
+    }
+    return allStars;
+}();
+//star = new Star(303, 0);
+//star1 = new Star(505, 0);
+//allStars.push(star);
+//allStars.push(star1);
 //console.dir(allStars);
 player = new Player(703, 1130);
 let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
