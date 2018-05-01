@@ -100,6 +100,10 @@ var Engine = (function(global) {
 
         player.update();
 
+        //star update
+        /*allStars.forEach((star) => {
+          star.update();
+        });*/
         //console.log(player.x, enemy.x);
     }
 
@@ -179,9 +183,9 @@ var Engine = (function(global) {
 
 
         //star render
-        /*allStars.forEach((star) => {
+        allStars.forEach((star) => {
           star.render();
-        });*/
+        });
 
 
 
@@ -205,6 +209,7 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/Rock.png',
+        'images/Star.png',
         'images/char-boy.png'
     ]);
     Resources.onReady(init);

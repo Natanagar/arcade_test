@@ -310,7 +310,9 @@ class Star{
         this.x2 = this.x1 + 92;
 
     }
+    update(){
 
+    }
 
     render(){
         //console.log (this.ctx);
@@ -318,11 +320,11 @@ class Star{
 
     }
 }
-star = new Star(156, 42);
-star1 = new Star(550, 42);
+star = new Star(303, 0);
+star1 = new Star(505, 0);
 allStars.push(star);
 allStars.push(star1);
-console.dir(allStars);
+//console.dir(allStars);
 player = new Player(703, 1130);
 let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
 let enemy2 = new Enemy(-100, 561, 275);
