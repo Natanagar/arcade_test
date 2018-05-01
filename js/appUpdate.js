@@ -210,8 +210,8 @@ class Player {
     }
 
 }
-//add to gamefield Stone
-/*class Stone {
+/*//add to gamefield Stone
+class Stone {
     constructor(x,y){
 
         this.setStoneOX(x);
@@ -335,27 +335,32 @@ let generateStars = function(star,x,y){
     }
     return allStars;
 }();
-//star = new Star(303, 0);
-//star1 = new Star(505, 0);
-//allStars.push(star);
-//allStars.push(star1);
-//console.dir(allStars);
+
 player = new Player(703, 1130);
-let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
-let enemy2 = new Enemy(-100, 561, 275);
-let enemy3 = new Enemy(-100, 626, 400);
-let enemy4 = new Enemy(-100, 712, 300);
-let enemy5 = new Enemy(1505, 712, -350);
+let generateEnemies = function(){
+
+    //generate new enemies
+    let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
+    let enemy2 = new Enemy(-100, 561, 275);
+    let enemy3 = new Enemy(-100, 626, 400);
+    let enemy4 = new Enemy(-100, 712, 300);
+    let enemy5 = new Enemy(1505, 712, -350);
+
+    //add to allEnemies array
+    allEnemies.push(enemy);
+    allEnemies.push(enemy2);
+    allEnemies.push(enemy3);
+    allEnemies.push(enemy4);
+    allEnemies.push(enemy5);
+    return allEnemies;
+}();
+
 
 //let stone = new Stone(106, 48);
 
 
 
-allEnemies.push(enemy);
-allEnemies.push(enemy2);
-allEnemies.push(enemy3);
-allEnemies.push(enemy4);
-allEnemies.push(enemy5);
+
 
 
 // Now write your own player class
