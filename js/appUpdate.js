@@ -14,6 +14,8 @@ const playerList = [
 let allEnemies = [],
     allRocks = [],
     allStars = [],
+    allStones = [],
+    stone,
     star,
     rock,
     dt,
@@ -91,7 +93,7 @@ class Enemy{
     }
 
 
-
+//player
 class Player {
     constructor(x, y){
         // actual char-boy.png figure width = 68 px, height = 75 px
@@ -210,33 +212,35 @@ class Player {
     }
 
 }
-/*//add to gamefield Stone
+
+
+
+//add to gamefield Stone
 class Stone {
     constructor(x,y){
-
-        this.setStoneOX(x);
-        this.setStoneOY(y);
-        this.sprite = 'images/stone-block.png';
+        this.setStoneX(x);
+        this.setStoneY(y);
+        this.sprite = 'images/Selector.png';
    }
 
-    setStoneOX(x){
+   setStoneX(x){
         this.x = x;
         this.x1 = this.x+4;  //actual position of figure stone by OX
-        this.x2 = this.x+93;
+        this.x2 = this.x1+93;
     }
 
-    setStoneOY(y){
+    setStoneY(y){
         this.y = y;
         this.y1 = this.x+58;  //actual position of fige stone by OY
-        this.y2 = this.y+103;
+        this.y2 = this.y1+103;
     }
 
 
     render(){
-        //console.log(this.sprite);
-        ctx.drawImage(Resources.get(this.sprite, this.x, this.y);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-}*/
+}
+
 
 class Rock {
     constructor(x, y){
@@ -354,11 +358,32 @@ let generateEnemies = function(){
     allEnemies.push(enemy5);
     return allEnemies;
 }();
+//generate stones
+let generateStone = function(stone,x,y){
+    //number of quantity rocks
+    let stoneAmount = Math.round(Math.random()*3+7.5);
+    //console.log(`rock amount ${rockAmount}`);
+    let newXCoordinates, newYCoordinates, positionY;
+    //OX coordinats from 0 till 1465
+    //OY coordinats or 208 or 291;
+    for (let i = 0; i<stoneAmount; i++) {
+        newXCoordinates = (Math.round((Math.random()*15))*101);
+        positionY = Math.round((Math.random()*2 + 0.5));
+        if (positionY===1){
+            newYCoordinates = 208
+        } else newYCoordinates = 291;
+        //console.log(newXCoordinates);
+        stone = new Stone(newXCoordinates,newYCoordinates);
+        allStones.push(stone);
+    }
+    return allStones;
 
+}();
 
-//let stone = new Stone(106, 48);
-
-
+/*stone = new Stone(0,291);
+stone1 = new Stone(505,291);
+allStones.push(stone);
+allStones.push(stone1);*/
 
 
 

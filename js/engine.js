@@ -100,11 +100,7 @@ var Engine = (function(global) {
 
         player.update();
 
-        //star update
-        /*allStars.forEach((star) => {
-          star.update();
-        });*/
-        //console.log(player.x, enemy.x);
+
     }
 
     /* This function initially draws the "game level", it will then call
@@ -186,6 +182,10 @@ var Engine = (function(global) {
         allStars.forEach((star) => {
           star.render();
         });
+        //stone render
+        for(let stone of allStones){
+            stone.render();
+        }
 
 
 
@@ -210,7 +210,7 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/Rock.png',
         'images/Star.png',
-        'images/stone-block.png',
+        'images/Selector.png',
         'images/char-boy.png'
     ]);
     Resources.onReady(init);
