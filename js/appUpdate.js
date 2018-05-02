@@ -15,7 +15,9 @@ let allEnemies = [],
     allRocks = [],
     allStars = [],
     allStones = [],
+    allOrange = [],
     stone,
+    orange,
     star,
     rock,
     dt,
@@ -29,6 +31,9 @@ let allEnemies = [],
     maxGameboard,
     counterLife = 5,
     counterCollision = 0,
+    counterStars,
+    counterRock,
+    counterSelector,
     maxPosition = {
         x : 1506,
         y : 1205
@@ -380,11 +385,61 @@ let generateStone = function(stone,x,y){
 
 }();
 
-/*stone = new Stone(0,291);
-stone1 = new Stone(505,291);
-allStones.push(stone);
-allStones.push(stone1);*/
+class Orange {
+    constructor(x, y, speed){
+        this.sprite = 'images/Gem Orange.png';
+        this.setOrangeX(x);
+        this.setOrangeY(y);
+        this.speed = speed;
+    }
+    setOrangeY(y){
+        // Gemss Y coordinate stays the same during the game run
+        this.y = y;
+        this.y1 = this.y + 58;
+        this.y2 = this.y1 + 104;
+    }
 
+    setOrangeX(x){
+        this.x = x;
+        // (x1,y1) - left upper point of the bug figure
+        this.x1 = this.x + 3;
+        // (x2,y2) - right lower point of the bug figure
+        this.x2 = this.x1 + 95;
+    }
+
+    checkCoordinats(x,y,speed){
+        if (this.x >=1506){
+            this.x = -100;
+            this.speed = Math.round((Math.random()*250) + (Math.random()*250)); //actual version
+            //console.log("enemy came out for edge");
+        }
+    }
+
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
+    update(dt){
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+        // Orange moves only to the right, y coordinate stays the same.
+        this.setOrangeX(this.x + (dt * this.speed));
+        this.checkCoordinats();
+        //console.log(this.x, dt, this.speed);
+
+    }
+    // Draw the enemy on the screen, required method for game
+    render(){
+        //console.log(this.sprite);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+orange = new Orange(-100, 220, 30);
+//orange1 = new Orange(200,200, 35);
+allOrange.push(orange);
+//allOrange.push(orange);
+console.log(orange);
+console.log(allOrange);
 
 
 

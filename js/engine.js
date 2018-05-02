@@ -97,7 +97,10 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-
+        allOrange.forEach((orange) => {
+            orange.update(dt);
+            //console.log(this.orange);
+        });
         player.update();
 
 
@@ -186,7 +189,10 @@ var Engine = (function(global) {
         for(let stone of allStones){
             stone.render();
         }
-
+        for(let orange of allOrange){
+            orange.render();
+            //console.log(this.orange);
+        }
 
 
     }
@@ -211,6 +217,7 @@ var Engine = (function(global) {
         'images/Rock.png',
         'images/Star.png',
         'images/Selector.png',
+        'images/Gem Orange.png',
         'images/char-boy.png'
     ]);
     Resources.onReady(init);
