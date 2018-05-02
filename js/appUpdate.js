@@ -434,12 +434,21 @@ class Orange {
     }
 }
 
-orange = new Orange(-100, 137, 30);
-//orange1 = new Orange(200,200, 35);
-allOrange.push(orange);
-//allOrange.push(orange);
-console.log(orange);
-console.log(allOrange);
+let orangeRandom = function(orange, x, y){
+    let quantityOrange = Math.round(Math.random()*3+7.5);
+    let newXCoordinates = -100;
+    let newYCoordinates = 137;
+    this.speed = 30;
+    for (let i = 0; i< quantityOrange; i++) {
+        orange = new Orange(newXCoordinates, newYCoordinates, this.speed);
+        console.log(orange);
+        allOrange.push(orange);
+        newXCoordinates += 100;
+    }
+    console.log(allOrange);
+    return allOrange;
+}();
+
 
 
 
