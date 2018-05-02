@@ -288,8 +288,8 @@ let generateRock = function(rock,x,y){
         newXCoordinates = (Math.round((Math.random()*15))*101);
         positionY = Math.round((Math.random()*2 + 0.5));
         if (positionY===1){
-            newYCoordinates = 42
-        } else newYCoordinates = 125;
+            newYCoordinates = 208; //42
+        } else newYCoordinates = 291;//125
         //console.log(newXCoordinates);
         rock = new Rock(newXCoordinates,newYCoordinates);
         allRocks.push(rock);
@@ -375,8 +375,8 @@ let generateStone = function(stone,x,y){
         newXCoordinates = (Math.round((Math.random()*15))*101);
         positionY = Math.round((Math.random()*2 + 0.5));
         if (positionY===1){
-            newYCoordinates = 208
-        } else newYCoordinates = 291;
+            newYCoordinates = 374;//208
+        } else newYCoordinates = 457; //291
         //console.log(newXCoordinates);
         stone = new Stone(newXCoordinates,newYCoordinates);
         allStones.push(stone);
@@ -434,7 +434,7 @@ class Orange {
     }
 }
 
-orange = new Orange(-100, 220, 30);
+orange = new Orange(-100, 137, 30);
 //orange1 = new Orange(200,200, 35);
 allOrange.push(orange);
 //allOrange.push(orange);
