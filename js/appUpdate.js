@@ -408,8 +408,8 @@ class Orange {
 
     checkCoordinats(x,y,speed){
         if (this.x >=1506){
-            //this.speed = -this.speed;
-            this.x = -100;
+            this.speed = -this.speed;
+            //this.x = -100;
         }
     }
 
