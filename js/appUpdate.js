@@ -513,16 +513,25 @@ class BlueGem {
 let orangeRandom = function(){
     //create instance
     //create quantity of instance (random from 1 till 8)
-    let quantityOrange = Math.round(Math.random()*5+0.5);
+    let quantityOrangeFirstRange = Math.round(Math.random()*5+0.5);
+    let quantityOrangeSecondRange = Math.round(Math.random()*5+0.5);
     //get first OX position of instance
     let firstXCoordinates = -100;
     //get first OY position of instance
     let firstYCoordinates = 137;
+    let secondYCoordinates = 963;
     //instance can move
     this.speed = 250;
-    for (let i = 0; i< quantityOrange; i++) {
+    for (let i = 0; i< quantityOrangeFirstRange; i++) {
         //generate new instance
         orange = new Orange(firstXCoordinates, firstYCoordinates, this.speed);
+        //add new instance to array;
+        allOranges.push(orange);
+        //recalculate OX coordinate
+        firstXCoordinates += 100;
+    }
+    for (let i = 0; i<quantityOrangeSecondRange; i++) {
+        orange = new Orange(firstXCoordinates, secondYCoordinates, this.speed);
         //add new instance to array;
         allOranges.push(orange);
         //recalculate OX coordinate
@@ -534,15 +543,24 @@ let blueRandom = function(){
     //create instance
     //create quantity of instance (random from 1 till 8)
     let quantityBlueGem = Math.round(Math.random()*5+0.5);
+    let quantityBlueGemSecondRange = Math.round(Math.random()*5+0.5);
     //get first OX position of instance
     let firstXCoordinates = 1415;
     //get first OY position of instance
     let firstYCoordinates = 54;
+    let secondYCoordinates = 880;
     //instance can move
     this.speed = -350;
     for (let i = 0; i< quantityBlueGem; i++) {
         //generate new instance
         bluegem = new BlueGem(firstXCoordinates, firstYCoordinates, this.speed);
+        //add new instance to array;
+        allBlueGems.push(bluegem);
+        //recalculate OX coordinate
+        firstXCoordinates += -100;
+    }
+    for (let i = 0; i< quantityBlueGemSecondRange; i++) {
+        bluegem = new BlueGem(firstXCoordinates, secondYCoordinates, this.speed);
         //add new instance to array;
         allBlueGems.push(bluegem);
         //recalculate OX coordinate
