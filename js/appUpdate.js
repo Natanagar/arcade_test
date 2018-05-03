@@ -16,6 +16,7 @@ let allEnemies = [],
     allStars = [],
     allStones = [],
     allOranges = [],
+    orange,
     dt,
     speed,
     player,
@@ -117,21 +118,23 @@ class Player {
         this.y2 = this.y1 + 61;// actual height +75
     }
 
-    getNewPosition(position, maxGameboard){
+    getNewPosition(position, maxGameboard, speed){
         //console.log(allowedKeys);
-    if (position == this.x){
-        maxGameboard = maxPosition.x;
-    } else {
-        maxGameboard = maxPosition.y;
-    }
+            if (position == this.x){
+                maxGameboard = maxPosition.x;
+            } else {
+                maxGameboard = maxPosition.y;
+            }
 
-        if (position<= -80 || position >= maxGameboard){
+            if (position<= -80 || position >= maxGameboard){
+                this.x = 703;
+                this.y = 1130;
 
-            this.x = 703;
-            this.y = 1130;
-
+            }
         }
-    }
+
+
+
     checkCollisionWithRock(){
         for(rock of allRocks){
             if((rock.x2 < this.x1 || rock.x1 > this.x2)||(rock.y2 < this.y1 || rock.y1 > this.y2)){
@@ -140,15 +143,24 @@ class Player {
               }
         }
     }
+
+    checkCollisionWithOrange(x,y){
+        for(orange of allOranges){
+            if((orange.x2 < this.x1 || orange.x1 > this.x2)||(orange.y2 < this.y1 || orange.y1 > this.y2)){
+                  console.log('====Collision with orange ====');
+                    //this.setPlayerCoordinates(703,1130);
+              }
+          }
+    }
     checkContactWithWater(x,y){
         if (this.y > 839 && this.y < 1005){
             console.log(' 839 and 1005');
             console.log ('=======================');
 
-        } else if(this.y < 125 && this.y > 42){ //update actual coordinats for water blocks 42(1/2 height block)
-            console.log('42 and 125');
+        } else if(this.y > 42 && this.y < 125){ //update actual coordinats for water blocks 42(1/2 height block)
+            console.log('125 and 42');//42 and 125
             //checkcollision with rocks
-            this.checkCollisionWithRock();
+            this.checkCollisionWithOrange();
             counterLife += 1;
             //console.log(counterLife);
             //return to first position of player
@@ -434,7 +446,6 @@ class Orange {
 
 let orangeRandom = function(){
     //create instance
-    let orange;
     //create quantity of instance (random from 1 till 8)
     let quantityOrange = Math.round(Math.random()*3+7.5);
     //get first OX position of instance
