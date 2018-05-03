@@ -168,10 +168,11 @@ class Player {
     }
     checkContactWithWater(x,y){
         if (this.y > 839 && this.y < 1005){
-            console.log(' 839 and 1005');
+            console.log(' 839 and 1005 contact with water');
             console.log ('=======================');
 
         } else if(this.y > 42 && this.y < 208){ //update actual coordinats for water blocks 42(1/2 height block)
+            console.log('===========Contact with water');
             if (this.y> 42 && this.y <125 ){
                 this.checkCollisionWithBlueGems();
             } else if (this.y >=125 && this.y < 208){
@@ -185,7 +186,7 @@ class Player {
             //this.y = 1130;
             return counterLife;
         } else if(this.y > 374 && this.y<457){
-            console.log ('=======================');
+            console.log ('======================= contact with water');
             console.log('374 and 457');
 
         }
@@ -346,9 +347,6 @@ class Star{
         this.x2 = this.x1 + 92;
 
     }
-    update(){
-
-    }
 
     render(){
         //console.log (this.ctx);
@@ -364,12 +362,13 @@ let generateStars = function(){
     //console.log(`star amount ${starAmount}`);
 
     //coordinates by OX with Math.random(), coordinates by OY = -12;
-    let firstXCoordinates, firstYCoordinates = -12;
+    let firstXCoordinates, firstYCoordinates = -2;
     //in loop create new instance and add to array
     for (let i = 0; i<= starAmount; i++) {
-        newXCoordinates = (Math.round((Math.random()*15))*101);
+        firstXCoordinates = (Math.round((Math.random()*15))*101);
         star = new Star(firstXCoordinates, firstYCoordinates);
         allStars.push(star);
+        console.log(allStars);
     }
 }();
 

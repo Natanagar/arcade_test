@@ -187,6 +187,7 @@ var Engine = (function(global) {
         //star render
         allStars.forEach((star) => {
           star.render();
+          //console.log(this.star);
         });
         //stone render
         for(let stone of allStones){
