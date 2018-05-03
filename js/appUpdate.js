@@ -15,11 +15,8 @@ let allEnemies = [],
     allRocks = [],
     allStars = [],
     allStones = [],
-    allOrange = [],
-    stone,
-    orange,
+    allOranges = [],
     star,
-    rock,
     dt,
     speed,
     player,
@@ -277,7 +274,8 @@ class Rock {
     }
 
 }
-let generateRock = function(rock,x,y){
+let generateRock = function(){
+    let rock;
     //number of quantity rocks
     let rockAmount = Math.round(Math.random()*3+7.5);
     //console.log(`rock amount ${rockAmount}`);
@@ -288,8 +286,8 @@ let generateRock = function(rock,x,y){
         newXCoordinates = (Math.round((Math.random()*15))*101);
         positionY = Math.round((Math.random()*2 + 0.5));
         if (positionY===1){
-            newYCoordinates = 208; //42
-        } else newYCoordinates = 291;//125
+            newYCoordinates = 230; //42
+        } else newYCoordinates = 306;//125
         //console.log(newXCoordinates);
         rock = new Rock(newXCoordinates,newYCoordinates);
         allRocks.push(rock);
@@ -299,11 +297,11 @@ let generateRock = function(rock,x,y){
 }();
 
 class Star{
-    constructor(x,y){
-        this.sprite = 'images/Star.png';
-        this.setStarY(y);
-        this.setStarX(x);
-    }
+        constructor(x,y){
+            this.sprite = 'images/Star.png';
+            this.setStarY(y);
+            this.setStarX(x);
+        }
      setStarY(y){
         // Enemy's Y coordinate stays the same during the game run
         this.y = y;
@@ -354,6 +352,7 @@ let generateEnemies = function(){
     let enemy3 = new Enemy(-100, 626, 400);
     let enemy4 = new Enemy(-100, 712, 300);
     let enemy5 = new Enemy(1505, 712, -350);
+    let enemy6 = new Enemy(1505, 546, -450);
 
     //add to allEnemies array
     allEnemies.push(enemy);
@@ -361,14 +360,15 @@ let generateEnemies = function(){
     allEnemies.push(enemy3);
     allEnemies.push(enemy4);
     allEnemies.push(enemy5);
-    return allEnemies;
+    allEnemies.push(enemy6);
 }();
 //generate stones
-let generateStone = function(stone,x,y){
-    //number of quantity rocks
+let generateStone = function(){
+    let stone;
+    //random number of quantity rocks (from 1 till 8)
     let stoneAmount = Math.round(Math.random()*3+7.5);
-    //console.log(`rock amount ${rockAmount}`);
-    let newXCoordinates, newYCoordinates, positionY;
+    //get first coordinates by OX and OY and level
+    let firstXCoordinates, firstYCoordinates, positionY;
     //OX coordinats from 0 till 1465
     //OY coordinats or 208 or 291;
     for (let i = 0; i<stoneAmount; i++) {
@@ -381,7 +381,6 @@ let generateStone = function(stone,x,y){
         stone = new Stone(newXCoordinates,newYCoordinates);
         allStones.push(stone);
     }
-    return allStones;
 
 }();
 
@@ -410,7 +409,7 @@ class Orange {
     checkCoordinats(x,y,speed){
         if (this.x >=1506){
             this.x = -100;
-            this.speed = Math.round((Math.random()*250) + (Math.random()*250)); //actual version
+            //this.speed = Math.round((Math.random()*250) + (Math.random()*250)); //actual version
             //console.log("enemy came out for edge");
         }
     }
@@ -434,19 +433,25 @@ class Orange {
     }
 }
 
-let orangeRandom = function(orange, x, y){
+let orangeRandom = function(){
+    //create instance
+    let orange;
+    //create quantity of instance (random from 1 till 8)
     let quantityOrange = Math.round(Math.random()*3+7.5);
-    let newXCoordinates = -100;
-    let newYCoordinates = 137;
+    //get first OX position of instance
+    let firstXCoordinates = -100;
+    //get first OY position of instance
+    let firstYCoordinates = 137;
+    //instance can move
     this.speed = 30;
     for (let i = 0; i< quantityOrange; i++) {
-        orange = new Orange(newXCoordinates, newYCoordinates, this.speed);
-        console.log(orange);
-        allOrange.push(orange);
-        newXCoordinates += 100;
+        //generate new instance
+        orange = new Orange(firstXCoordinates, firstYCoordinates, this.speed);
+        //add new instance to array;
+        allOranges.push(orange);
+        //recalculate OX coordinate
+        firstXCoordinates += 100;
     }
-    console.log(allOrange);
-    return allOrange;
 }();
 
 

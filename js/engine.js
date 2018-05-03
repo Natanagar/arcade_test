@@ -97,7 +97,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        allOrange.forEach((orange) => {
+        allOranges.forEach((orange) => {
             orange.update(dt);
             //console.log(this.orange);
         });
@@ -189,7 +189,7 @@ var Engine = (function(global) {
         for(let stone of allStones){
             stone.render();
         }
-        for(let orange of allOrange){
+        for(let orange of allOranges){
             orange.render();
             //console.log(this.orange);
         }
