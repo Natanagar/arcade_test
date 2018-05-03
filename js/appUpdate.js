@@ -408,9 +408,8 @@ class Orange {
 
     checkCoordinats(x,y,speed){
         if (this.x >=1506){
+            //this.speed = -this.speed;
             this.x = -100;
-            //this.speed = Math.round((Math.random()*250) + (Math.random()*250)); //actual version
-            //console.log("enemy came out for edge");
         }
     }
 
@@ -443,7 +442,7 @@ let orangeRandom = function(){
     //get first OY position of instance
     let firstYCoordinates = 137;
     //instance can move
-    this.speed = 30;
+    this.speed = 250;
     for (let i = 0; i< quantityOrange; i++) {
         //generate new instance
         orange = new Orange(firstXCoordinates, firstYCoordinates, this.speed);
