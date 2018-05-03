@@ -1,7 +1,3 @@
-const enemiesSprite = [
-    'images/enemy-bug.png',
-    'images/enemy-bug_invert.png'
-];
 //console.dir(enemiesSprite);
 const playerList = [
 'images/char-boy.png',
@@ -18,7 +14,9 @@ let allEnemies = [],
     allOranges = [],
     allBlueGems = [],
     bluegem,
+    sprite,
     orange,
+    stone,
     rock,
     star,
     dt,
@@ -376,7 +374,7 @@ player = new Player(703, 1130);
 let generateEnemies = function(){
 
     //generate new enemies
-    let enemy = new Enemy(enemiesSprite[0],-100, 801, 350);
+    let enemy = new Enemy(-100, 801, 350);
     let enemy2 = new Enemy(-100, 561, 275);
     let enemy3 = new Enemy(-100, 626, 400);
     let enemy4 = new Enemy(-100, 712, 300);
@@ -394,26 +392,21 @@ let generateEnemies = function(){
     allEnemies.push(enemy7);
 }();
 //generate stones
-let generateStone = function(){
-    let stone;
-    //random number of quantity rocks (from 1 till 8)
-    let stoneAmount = Math.round(Math.random()*3+7.5);
-    //get first coordinates by OX and OY and level
-    let firstXCoordinates, firstYCoordinates, positionY;
-    //OX coordinats from 0 till 1465
-    //OY coordinats or 208 or 291;
-    for (let i = 0; i<stoneAmount; i++) {
-        newXCoordinates = (Math.round((Math.random()*15))*101);
-        positionY = Math.round((Math.random()*2 + 0.5));
-        if (positionY===1){
-            newYCoordinates = 374;//208
-        } else newYCoordinates = 457; //291
-        //console.log(newXCoordinates);
-        stone = new Stone(newXCoordinates,newYCoordinates);
+let generateStone = function(maximumNumberOfItems, positionOY){
+    if(positionOY===1){
+            firstYCoordinate = 374;
+        } else if(positionOY===2){firstYCoordinate = 457};
+    for(let i=0; i<maximumNumberOfItems; i++){
+        firstXCoordinate = (Math.round(Math.random()*15)*101);
+        stone = new Stone(firstXCoordinate, firstYCoordinate);
         allStones.push(stone);
     }
 
-}();
+};
+//generate stone in two positions
+generateStone(Math.round((Math.random()*4 + 0.5)), Math.round((Math.random()*2 + 0.5)));
+generateStone(Math.round((Math.random()*4 + 0.5)), Math.round((Math.random()*2 + 0.5)));
+
 
 class Orange {
     constructor(x, y, speed){

@@ -221,6 +221,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
+        'images/enemy-bug_invert.png',
         'images/Rock.png',
         'images/Star.png',
         'images/Selector.png',
