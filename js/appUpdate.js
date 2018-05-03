@@ -510,65 +510,30 @@ class BlueGem {
     }
 }
 
-let orangeRandom = function(){
-    //create instance
-    //create quantity of instance (random from 1 till 8)
-    let quantityOrangeFirstRange = Math.round(Math.random()*5+0.5);
-    let quantityOrangeSecondRange = Math.round(Math.random()*5+0.5);
-    //get first OX position of instance
-    let firstXCoordinates = -100;
-    //get first OY position of instance
-    let firstYCoordinates = 137;
-    let secondYCoordinates = 963;
-    //instance can move
-    this.speed = 250;
-    for (let i = 0; i< quantityOrangeFirstRange; i++) {
-        //generate new instance
-        orange = new Orange(firstXCoordinates, firstYCoordinates, this.speed);
-        //add new instance to array;
+let orangeRandom = function(maximumNumberOfItems,firstXCoordinate, firstYCoordinate, speed){
+    for(let i=0; i<maximumNumberOfItems; i++){
+        orange = new Orange(firstXCoordinate, firstYCoordinate, speed);
         allOranges.push(orange);
-        //recalculate OX coordinate
-        firstXCoordinates += 100;
+        firstXCoordinate += 100;
     }
-    for (let i = 0; i<quantityOrangeSecondRange; i++) {
-        orange = new Orange(firstXCoordinates, secondYCoordinates, this.speed);
-        //add new instance to array;
-        allOranges.push(orange);
-        //recalculate OX coordinate
-        firstXCoordinates += 100;
-    }
-}();
+};
+//the first range of oranges by OY 137
+orangeRandom(Math.round(Math.random()*5+0.5), -100, 137, 250);
+//the second range of oranges by OY 963
+orangeRandom(Math.round(Math.random()*5+0.5), -100, 963, 250);
 
-let blueRandom = function(){
-    //create instance
-    //create quantity of instance (random from 1 till 8)
-    let quantityBlueGem = Math.round(Math.random()*5+0.5);
-    let quantityBlueGemSecondRange = Math.round(Math.random()*5+0.5);
-    //get first OX position of instance
-    let firstXCoordinates = 1415;
-    //get first OY position of instance
-    let firstYCoordinates = 54;
-    let secondYCoordinates = 880;
-    //instance can move
-    this.speed = -350;
-    for (let i = 0; i< quantityBlueGem; i++) {
-        //generate new instance
-        bluegem = new BlueGem(firstXCoordinates, firstYCoordinates, this.speed);
-        //add new instance to array;
+
+let blueRandom = function(maximumNumberOfItems,firstXCoordinate, firstYCoordinate, speed){
+    for(let i=0; i<maximumNumberOfItems; i++){
+        bluegem = new BlueGem(firstXCoordinate, firstYCoordinate, speed);
         allBlueGems.push(bluegem);
-        //recalculate OX coordinate
-        firstXCoordinates += -100;
+        firstXCoordinate += -100;
     }
-    for (let i = 0; i< quantityBlueGemSecondRange; i++) {
-        bluegem = new BlueGem(firstXCoordinates, secondYCoordinates, this.speed);
-        //add new instance to array;
-        allBlueGems.push(bluegem);
-        //recalculate OX coordinate
-        firstXCoordinates += -100;
-    }
-}();
-
-
+};
+//the first range of gems by OY 54
+blueRandom(Math.round(Math.random()*5+0.5),1415, 54, -350);
+//the second range of gems by OY 880
+blueRandom(Math.round(Math.random()*5+0.5),1415, 880, -350);
 
 // Now write your own player class
 // This class requires an update(), render() and
