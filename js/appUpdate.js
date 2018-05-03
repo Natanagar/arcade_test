@@ -16,7 +16,6 @@ let allEnemies = [],
     allStars = [],
     allStones = [],
     allOranges = [],
-    star,
     dt,
     speed,
     player,
@@ -278,10 +277,9 @@ let generateRock = function(){
     let rock;
     //number of quantity rocks
     let rockAmount = Math.round(Math.random()*3+7.5);
-    //console.log(`rock amount ${rockAmount}`);
+    //create coordinates by OX and OY and level of instance (step)
     let newXCoordinates, newYCoordinates, positionY;
-    //OX coordinats from 0 till 1465
-    //OY coordinats or 42 or 125;
+    //create new instance and add to array;
     for (let i = 0; i<rockAmount; i++) {
         newXCoordinates = (Math.round((Math.random()*15))*101);
         positionY = Math.round((Math.random()*2 + 0.5));
@@ -292,8 +290,6 @@ let generateRock = function(){
         rock = new Rock(newXCoordinates,newYCoordinates);
         allRocks.push(rock);
     }
-    return allRocks;
-
 }();
 
 class Star{
@@ -328,19 +324,21 @@ class Star{
     }
 }
 
-let generateStars = function(star,x,y){
-    //number of quantity rocks
+let generateStars = function(){
+    //create instance star
+    let star;
+    //random number of quantity rocks (from 1 till 6)
     let starAmount = Math.round(Math.random()*5+0.5);
     //console.log(`star amount ${starAmount}`);
 
-    //coordinates by OX with Math.random(), coordinates by OY = 0;
-    let newXCoordinates, positionY, newYCoordinates = -12;
+    //coordinates by OX with Math.random(), coordinates by OY = -12;
+    let firstXCoordinates, firstYCoordinates = -12;
+    //in loop create new instance and add to array
     for (let i = 0; i<= starAmount; i++) {
         newXCoordinates = (Math.round((Math.random()*15))*101);
-        star = new Star(newXCoordinates, newYCoordinates);
+        star = new Star(firstXCoordinates, firstYCoordinates);
         allStars.push(star);
     }
-    return allStars;
 }();
 
 player = new Player(703, 1130);
@@ -351,8 +349,9 @@ let generateEnemies = function(){
     let enemy2 = new Enemy(-100, 561, 275);
     let enemy3 = new Enemy(-100, 626, 400);
     let enemy4 = new Enemy(-100, 712, 300);
-    let enemy5 = new Enemy(1505, 712, -350);
-    let enemy6 = new Enemy(1505, 546, -450);
+    let enemy5 = new Enemy(-100, 795, 400);
+    let enemy6 = new Enemy(1505, 712, -350);
+    let enemy7 = new Enemy(1505, 546, -450);
 
     //add to allEnemies array
     allEnemies.push(enemy);
@@ -361,6 +360,7 @@ let generateEnemies = function(){
     allEnemies.push(enemy4);
     allEnemies.push(enemy5);
     allEnemies.push(enemy6);
+    allEnemies.push(enemy7);
 }();
 //generate stones
 let generateStone = function(){
@@ -408,8 +408,8 @@ class Orange {
 
     checkCoordinats(x,y,speed){
         if (this.x >=1506){
-            this.speed = -this.speed;
-            //this.x = -100;
+            //this.speed = -this.speed;
+            this.x = -100;
         }
     }
 
