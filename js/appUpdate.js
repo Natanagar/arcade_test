@@ -19,6 +19,8 @@ let allEnemies = [],
     allBlueGems = [],
     bluegem,
     orange,
+    rock,
+    star,
     dt,
     speed,
     player,
@@ -136,12 +138,14 @@ class Player {
         }
 
 
-
+    //check collision with Rocks
     checkCollisionWithRock(){
         for(rock of allRocks){
-            if((rock.x2 < this.x1 || rock.x1 > this.x2)||(rock.y2 < this.y1 || rock.y1 > this.y2)){
+            if((rock.x2 < this.x1 || rock.x1 > this.x2)&&(rock.y2 < this.y1 || rock.y1 > this.y2)){
                   console.log('====Collision with rocks ====');
-                    //this.setPlayerCoordinates(703,1130);
+                    this.clearRect(this.x, this.y);
+                    counterRock += 50;
+                    console.log(counterRock);
               }
         }
     }
@@ -154,21 +158,31 @@ class Player {
               }
           }
     }
+    checkCollisionWithBlueGems(x,y){
+        for(bluegem of allBlueGems){
+            if((bluegem.x2 < this.x1 || bluegem.x1 > this.x2)||(bluegem.y2 < this.y1 || bluegem.y1 > this.y2)){
+                  console.log('====Collision with bluegem ====');
+                    //this.setPlayerCoordinates(703,1130);
+              }
+          }
+    }
     checkContactWithWater(x,y){
         if (this.y > 839 && this.y < 1005){
             console.log(' 839 and 1005');
             console.log ('=======================');
 
-        } else if(this.y > 42 && this.y < 125){ //update actual coordinats for water blocks 42(1/2 height block)
-            console.log('====================== contact with water ')
-            console.log('125 and 42');//42 and 125
-            //checkcollision with rocks
-            this.checkCollisionWithOrange();
+        } else if(this.y > 42 && this.y < 208){ //update actual coordinats for water blocks 42(1/2 height block)
+            if (this.y> 42 && this.y <125 ){
+                this.checkCollisionWithBlueGems();
+            } else if (this.y >=125 && this.y < 208){
+                this.checkCollisionWithOrange();
+            }
+
             counterLife += 1;
             //console.log(counterLife);
             //return to first position of player
-            this.x = 703;
-            this.y = 1130;
+            //this.x = 703;
+            //this.y = 1130;
             return counterLife;
         } else if(this.y > 374 && this.y<457){
             console.log ('=======================');
@@ -255,6 +269,10 @@ class Stone {
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+
+    clear(){
+        ctx.clearRect(Resources.get(this.sprite), this.x, this.y);
+    }
 }
 
 
@@ -289,7 +307,7 @@ class Rock {
 
 }
 let generateRock = function(){
-    let rock;
+
     //number of quantity rocks
     let rockAmount = Math.round(Math.random()*3+7.5);
     //create coordinates by OX and OY and level of instance (step)
@@ -341,7 +359,6 @@ class Star{
 
 let generateStars = function(){
     //create instance star
-    let star;
     //random number of quantity rocks (from 1 till 6)
     let starAmount = Math.round(Math.random()*5+0.5);
     //console.log(`star amount ${starAmount}`);
@@ -470,9 +487,8 @@ class BlueGem {
     }
 
     checkCoordinats(x,y,speed){
-        if (this.x <= 0){
-            //this.speed = -this.speed;
-            this.x = -100;
+        if (this.x <= -100){
+            this.x = 1415;
         }
     }
 
@@ -498,7 +514,7 @@ class BlueGem {
 let orangeRandom = function(){
     //create instance
     //create quantity of instance (random from 1 till 8)
-    let quantityOrange = Math.round(Math.random()*3+7.5);
+    let quantityOrange = Math.round(Math.random()*5+0.5);
     //get first OX position of instance
     let firstXCoordinates = -100;
     //get first OY position of instance
@@ -518,7 +534,7 @@ let orangeRandom = function(){
 let blueRandom = function(){
     //create instance
     //create quantity of instance (random from 1 till 8)
-    let quantityBlueGem = Math.round(Math.random()*3+7.5);
+    let quantityBlueGem = Math.round(Math.random()*5+0.5);
     //get first OX position of instance
     let firstXCoordinates = 1415;
     //get first OY position of instance
