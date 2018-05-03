@@ -96,7 +96,6 @@ class Enemy{
         }
     }
 
-
 //player
 class Player {
     constructor(x, y){
@@ -305,24 +304,21 @@ class Rock {
     }
 
 }
-let generateRock = function(){
-
-    //number of quantity rocks
-    let rockAmount = Math.round(Math.random()*3+7.5);
-    //create coordinates by OX and OY and level of instance (step)
-    let newXCoordinates, newYCoordinates, positionY;
-    //create new instance and add to array;
-    for (let i = 0; i<rockAmount; i++) {
-        newXCoordinates = (Math.round((Math.random()*15))*101);
-        positionY = Math.round((Math.random()*2 + 0.5));
-        if (positionY===1){
-            newYCoordinates = 230; //42
-        } else newYCoordinates = 306;//125
-        //console.log(newXCoordinates);
-        rock = new Rock(newXCoordinates,newYCoordinates);
+let generateRock = function(maximumNumberOfItems, positionY){
+    if(positionY===1){
+            firstYCoordinate = 230;
+        } else if(positionY===2){firstYCoordinate = 306};
+    for(let i=0; i<maximumNumberOfItems; i++){
+        firstXCoordinate = (Math.round(Math.random()*15)*101);
+        rock = new Rock(firstXCoordinate, firstYCoordinate);
         allRocks.push(rock);
     }
-}();
+
+};
+
+generateRock(Math.round(Math.random()*4+0.5),Math.round((Math.random()*2 + 0.5)));
+generateRock(Math.round(Math.random()*4+0.5),Math.round((Math.random()*2 + 0.5)));
+
 
 class Star{
         constructor(x,y){
@@ -352,23 +348,15 @@ class Star{
 
     }
 }
-
-let generateStars = function(){
-    //create instance star
-    //random number of quantity rocks (from 1 till 6)
-    let starAmount = Math.round(Math.random()*5+0.5);
-    //console.log(`star amount ${starAmount}`);
-
-    //coordinates by OX with Math.random(), coordinates by OY = -12;
-    let firstXCoordinates, firstYCoordinates = -2;
-    //in loop create new instance and add to array
-    for (let i = 0; i<= starAmount; i++) {
-        firstXCoordinates = (Math.round((Math.random()*15))*101);
-        star = new Star(firstXCoordinates, firstYCoordinates);
+let generateStars = function(maximumNumberOfItems, firstYCoordinate){
+    for(let i=0; i<maximumNumberOfItems; i++){
+        let firstXCoordinate = (Math.round((Math.random()*15))*101);
+        star = new Star(firstXCoordinate, firstYCoordinate);
         allStars.push(star);
-        console.log(allStars);
     }
-}();
+};
+generateStars(Math.round(Math.random()*5+0.5), -2);
+
 
 player = new Player(703, 1130);
 let generateEnemies = function(){
