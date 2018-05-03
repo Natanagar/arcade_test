@@ -16,6 +16,8 @@ let allEnemies = [],
     allStars = [],
     allStones = [],
     allOranges = [],
+    allBlueGems = [],
+    bluegem,
     orange,
     dt,
     speed,
@@ -158,6 +160,7 @@ class Player {
             console.log ('=======================');
 
         } else if(this.y > 42 && this.y < 125){ //update actual coordinats for water blocks 42(1/2 height block)
+            console.log('====================== contact with water ')
             console.log('125 and 42');//42 and 125
             //checkcollision with rocks
             this.checkCollisionWithOrange();
@@ -444,6 +447,54 @@ class Orange {
     }
 }
 
+class BlueGem {
+    constructor(x, y, speed){
+        this.sprite = 'images/Gem Blue.png';
+        this.setBlueGemX(x);
+        this.setBlueGemY(y);
+        this.speed = speed;
+    }
+    setBlueGemY(y){
+        // Gemss Y coordinate stays the same during the game run
+        this.y = y;
+        this.y1 = this.y + 58;
+        this.y2 = this.y1 + 104;
+    }
+
+    setBlueGemX(x){
+        this.x = x;
+        // (x1,y1) - left upper point of the bug figure
+        this.x1 = this.x + 3;
+        // (x2,y2) - right lower point of the bug figure
+        this.x2 = this.x1 + 95;
+    }
+
+    checkCoordinats(x,y,speed){
+        if (this.x <= 0){
+            //this.speed = -this.speed;
+            this.x = -100;
+        }
+    }
+
+    // Update the enemy's position, required method for game
+    // Parameter: dt, a time delta between ticks
+    update(dt){
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+        // Orange moves only to the right, y coordinate stays the same.
+        this.setBlueGemX(this.x + (dt * this.speed));
+        this.checkCoordinats();
+        //console.log(this.x, dt, this.speed);
+
+    }
+    // Draw the enemy on the screen, required method for game
+    render(){
+        //console.log(this.sprite);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
 let orangeRandom = function(){
     //create instance
     //create quantity of instance (random from 1 till 8)
@@ -464,6 +515,25 @@ let orangeRandom = function(){
     }
 }();
 
+let blueRandom = function(){
+    //create instance
+    //create quantity of instance (random from 1 till 8)
+    let quantityBlueGem = Math.round(Math.random()*3+7.5);
+    //get first OX position of instance
+    let firstXCoordinates = 1415;
+    //get first OY position of instance
+    let firstYCoordinates = 54;
+    //instance can move
+    this.speed = -350;
+    for (let i = 0; i< quantityBlueGem; i++) {
+        //generate new instance
+        bluegem = new BlueGem(firstXCoordinates, firstYCoordinates, this.speed);
+        //add new instance to array;
+        allBlueGems.push(bluegem);
+        //recalculate OX coordinate
+        firstXCoordinates += -100;
+    }
+}();
 
 
 

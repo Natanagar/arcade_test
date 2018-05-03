@@ -101,6 +101,9 @@ var Engine = (function(global) {
             orange.update(dt);
             //console.log(this.orange);
         });
+        allBlueGems.forEach((bluegem) => {
+          bluegem.update(dt);
+        });
         player.update();
 
 
@@ -193,6 +196,9 @@ var Engine = (function(global) {
             orange.render();
             //console.log(this.orange);
         }
+        for(let bluegem of allBlueGems){
+            bluegem.render();
+        }
 
 
     }
@@ -218,6 +224,7 @@ var Engine = (function(global) {
         'images/Star.png',
         'images/Selector.png',
         'images/Gem Orange.png',
+        'images/Gem Blue.png',
         'images/char-boy.png'
     ]);
     Resources.onReady(init);
