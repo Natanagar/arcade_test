@@ -1,4 +1,5 @@
-//console.dir(enemiesSprite);
+const modal = document.querySelector('.modal');
+
 const playerList = [
 'images/char-boy.png',
 'images/char-cat-girls.png',
@@ -32,7 +33,8 @@ let allEnemies = [],
     counterCollision = 0,
     counterStars,
     counterRock,
-    counterSelector,
+    counterStones,
+    makeCollision = true,
     maxPosition = {
         x : 1506,
         y : 1205
@@ -155,8 +157,28 @@ class Player {
               }
           }
     }
-    checkCollisionWithBlueGems(x,y){
-        for(bluegem of allBlueGems){
+
+    checkCollisionWithStones(){
+        for(stone of allStones){
+            if(!(stone.x2 < this.x1 || stone.x1 > this.x2)){
+                if(!(stone.y2 < this.y1 || stone.y1 > this.y2)){
+                    console.log('====Collision with stone ====');
+                    counterStones +=100;
+                    makeCollision = true;
+
+              }
+          }
+        else makeCollision = false;
+
+        //else this.setPlayerCoordinates(703,1130);
+    }
+    return makeCollision;
+}
+
+
+
+    checkCollisionWithBlueGems(x,y) {
+        for(bluegem of allBlueGems) {
             if((bluegem.x2 < this.x1 || bluegem.x1 > this.x2)||(bluegem.y2 < this.y1 || bluegem.y1 > this.y2)){
                   console.log('====Collision with bluegem ====');
                     //this.setPlayerCoordinates(703,1130);
@@ -174,6 +196,7 @@ class Player {
                 this.checkCollisionWithBlueGems();
             } else if (this.y >=125 && this.y < 208){
                 this.checkCollisionWithOrange();
+
             }
 
             counterLife += 1;
@@ -182,10 +205,13 @@ class Player {
             //this.x = 703;
             //this.y = 1130;
             return counterLife;
-        } else if(this.y > 374 && this.y<457){
+        } else if(this.y > 374 && this.y<539){
             console.log ('======================= contact with water');
-            console.log('374 and 457');
-
+            console.log('374 and 539');
+            this.checkCollisionWithStones();
+            if (makeCollision == false){
+                    this.setPlayerCoordinates(703,1130);
+                }
         }
     }
 
@@ -392,8 +418,8 @@ let generateStone = function(maximumNumberOfItems, positionOY){
 
 };
 //generate stone in two positions
-generateStone(Math.round((Math.random()*4 + 0.5)), Math.round((Math.random()*2 + 0.5)));
-generateStone(Math.round((Math.random()*4 + 0.5)), Math.round((Math.random()*2 + 0.5)));
+generateStone(Math.round((Math.random()*6 + 0.5)), 1);
+generateStone(Math.round((Math.random()*6 + 0.5)), 2);
 
 
 class Orange {
@@ -515,6 +541,27 @@ let blueRandom = function(maximumNumberOfItems,firstXCoordinate, firstYCoordinat
 blueRandom(Math.round(Math.random()*5+0.5),1415, 54, -350);
 //the second range of gems by OY 880
 blueRandom(Math.round(Math.random()*5+0.5),1415, 880, -350);
+
+
+let scorePanel = function(){
+    let panel = document.createElement('div');
+    let panelLife = document.createElement('span');
+    let panelStars = document.createElement('span');
+    let panelRocks = document.createElement('span');
+    let panelStones = document.createElement('span');
+    panelLife.classList.add('counter');
+    panelStars.classList.add('counter');
+    panelRocks.classList.add('counter');
+    panelStones.classList.add('counter');
+    panelLife.innerHTML = `'counter of life' ${counterLife}`;
+    panelStars.innerHTML=`'counter of stars' ${counterStars}`;
+    panelRocks.innerHTML=`'counter of rock' ${counterRock}`;
+    panelStones.innerHTML=`'counter of selectors' ${counterStones}`;
+    panel.classList.add('score');
+    modal.appendChild(panel);
+    modal.appendChild(panelLife);
+
+}();
 
 // Now write your own player class
 // This class requires an update(), render() and
