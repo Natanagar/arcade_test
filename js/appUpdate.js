@@ -162,23 +162,24 @@ class Player {
 
     //check collision with rock
     checkCollisionWithRock(){
-        if(this.y > 374 && this.y<539){
-            console.log ('======================= player in the dangerous zone');
-            for(rock of allRocks) {
-            if(!(rock.x2 < this.x1 || rock.x1 > this.x2)){
-                if(!(rock.y2 < this.y1 || rock.y1 > this.y2)) {
-                    counterRock+=100;
+        if(this.y >= 166 && this.y<= 332){
+            console.log ('======================= player in the dangerous zone with rock');
+        for(rock of allRocks) {
+            if(!(rock.x2 < this.x1 || rock.x1 > this.x2)||(rock.y2 < this.y1 || rock.y1 > this.y2)) {
+                    //a.y > b.y1 || a.y1 < b.y || a.x1 < b.x || a.x > b.x1
+                    console.log('====Collision with rock ====');
+                    /*counterRock+=100;
                     if(counterRock == 500){
                         counterLife-=1;
                     }
 
-                    console.log('====Collision with rock ====');
+
                     console.log(counterRock, counterLife)
 
                     this.setPlayerCoordinates(703,1130);
+                        }*/
                     }
                 }
-            }
 
            }
 
@@ -247,7 +248,7 @@ class Player {
     update(){
         this.setPlayerCoordinates(this.x + this.dx,this.y + this.dy);
         this.checkCollisionWithRock();
-        this.checkCollisionWithSelectors();
+        //this.checkCollisionWithSelectors();
         this.checkContactWithWater();
         this.getNewPosition(this.x, maxPosition.x);
         this.getNewPosition(this.y, maxPosition.y);
@@ -354,8 +355,8 @@ let generateRock = function(maximumNumberOfItems, positionY){
 
 };
 
-generateRock(Math.round(Math.random()*4+0.5),Math.round((Math.random()*2 + 0.5)));
-generateRock(Math.round(Math.random()*4+0.5),Math.round((Math.random()*2 + 0.5)));
+generateRock(Math.round(Math.random()*4+0.5),1);
+generateRock(Math.round(Math.random()*4+0.5),2);
 
 
 class Star{
