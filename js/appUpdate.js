@@ -11,13 +11,13 @@ const playerList = [
 let allEnemies = [],
     allRocks = [],
     allStars = [],
-    allStones = [],
+    allSelectors = [],
     allOranges = [],
     allBlueGems = [],
     bluegem,
     sprite,
     orange,
-    stone,
+    selector,
     rock,
     star,
     dt,
@@ -31,16 +31,14 @@ let allEnemies = [],
     maxGameboard,
     counterLife = 5,
     counterCollision = 0,
-    counterStars,
-    counterRock,
-    counterStones,
+    counterStars = 0,
+    counterRock = 0,
+    counterSelectors = 0,
     makeCollision = true,
     maxPosition = {
         x : 1506,
         y : 1205
     }; //actual position y 400
-
-    //ctx;
 
 
 // Enemies our player must avoid
@@ -135,21 +133,9 @@ class Player {
 
             }
         }
-
-
-    //check collision with Rocks
-    checkCollisionWithRock(){
-        for(rock of allRocks){
-            if((rock.x2 < this.x1 || rock.x1 > this.x2)&&(rock.y2 < this.y1 || rock.y1 > this.y2)){
-                  console.log('====Collision with rocks ====');
-                    this.clearRect(this.x, this.y);
-                    counterRock += 50;
-                    console.log(counterRock);
-              }
-        }
-    }
-
+    //check collision with oranges
     checkCollisionWithOrange(x,y){
+        //check coordinates
         for(orange of allOranges){
             if((orange.x2 < this.x1 || orange.x1 > this.x2)||(orange.y2 < this.y1 || orange.y1 > this.y2)){
                   console.log('====Collision with orange ====');
@@ -157,27 +143,49 @@ class Player {
               }
           }
     }
-
-    checkCollisionWithStones(){
-        for(stone of allStones){
-            if(!(stone.x2 < this.x1 || stone.x1 > this.x2)){
-                if(!(stone.y2 < this.y1 || stone.y1 > this.y2)){
-                    console.log('====Collision with stone ====');
-                    counterStones +=100;
-                    console.log(counterStones);
-                    makeCollision = true;
+    //check collision with selectors
+    checkCollisionWithSelectors(){
+        if(this.y > 374 && this.y<539){
+        for(selector of allSelectors){
+            if(!(selector.x2 < this.x1 || selector.x1 > this.x2)){
+                if(!(selector.y2 < this.y1 || selector.y1 > this.y2)){
+                    console.log('====Collision with selector ====');
+                    counterSelectors +=100;
+                    console.log(counterSelectors);
+                    selector.clear();
 
               }
           }
-        else makeCollision = false;
-
-        //else this.setPlayerCoordinates(703,1130);
+        }
     }
-    return makeCollision;
 }
 
+    //check collision with rock
+    checkCollisionWithRock(){
+        if(this.y > 374 && this.y<539){
+            console.log ('======================= player in the dangerous zone');
+            for(rock of allRocks) {
+            if(!(rock.x2 < this.x1 || rock.x1 > this.x2)){
+                if(!(rock.y2 < this.y1 || rock.y1 > this.y2)) {
+                    counterRock+=100;
+                    if(counterRock == 500){
+                        counterLife-=1;
+                    }
+
+                    console.log('====Collision with rock ====');
+                    console.log(counterRock, counterLife)
+
+                    this.setPlayerCoordinates(703,1130);
+                    }
+                }
+            }
+
+           }
+
+    }
 
 
+    //check collision with blue gems
     checkCollisionWithBlueGems(x,y) {
         for(bluegem of allBlueGems) {
             if((bluegem.x2 < this.x1 || bluegem.x1 > this.x2)||(bluegem.y2 < this.y1 || bluegem.y1 > this.y2)){
@@ -206,14 +214,15 @@ class Player {
             //this.x = 703;
             //this.y = 1130;
             return counterLife;
-        } else if(this.y > 374 && this.y<539){
+        }
+        /*else if(this.y > 374 && this.y<539){
             console.log ('======================= contact with water');
             console.log('374 and 539');
             this.checkCollisionWithStones();
             if (makeCollision == false){
                     this.setPlayerCoordinates(703,1130);
                 }
-        }
+        }*/
     }
 
     checkCollisionSideByPlayer(){
@@ -237,6 +246,8 @@ class Player {
 
     update(){
         this.setPlayerCoordinates(this.x + this.dx,this.y + this.dy);
+        this.checkCollisionWithRock();
+        this.checkCollisionWithSelectors();
         this.checkContactWithWater();
         this.getNewPosition(this.x, maxPosition.x);
         this.getNewPosition(this.y, maxPosition.y);
@@ -270,21 +281,21 @@ class Player {
 
 
 
-//add to gamefield Stone
-class Stone {
+//add to gamefield Selector
+class Selector {
     constructor(x,y){
-        this.setStoneX(x);
-        this.setStoneY(y);
+        this.setSelectorX(x);
+        this.setSelectorY(y);
         this.sprite = 'images/Selector.png';
    }
 
-   setStoneX(x){
+   setSelectorX(x){
         this.x = x;
         this.x1 = this.x+4;  //actual position of figure stone by OX
         this.x2 = this.x1+93;
     }
 
-    setStoneY(y){
+    setSelectorY(y){
         this.y = y;
         this.y1 = this.x+58;  //actual position of fige stone by OY
         this.y2 = this.y1+103;
@@ -407,20 +418,20 @@ let generateEnemies = function(){
     allEnemies.push(enemy7);
 }();
 //generate stones
-let generateStone = function(maximumNumberOfItems, positionOY){
+let generateSelector = function(maximumNumberOfItems, positionOY){
     if(positionOY===1){
             firstYCoordinate = 374;
         } else if(positionOY===2){firstYCoordinate = 457};
     for(let i=0; i<maximumNumberOfItems; i++){
         firstXCoordinate = (Math.round(Math.random()*15)*101);
-        stone = new Stone(firstXCoordinate, firstYCoordinate);
-        allStones.push(stone);
+        selector = new Selector(firstXCoordinate, firstYCoordinate);
+        allSelectors.push(selector);
     }
 
 };
 //generate stone in two positions
-generateStone(Math.round((Math.random()*6 + 0.5)), 1);
-generateStone(Math.round((Math.random()*6 + 0.5)), 2);
+generateSelector(Math.round((Math.random()*6 + 0.5)), 1);
+generateSelector(Math.round((Math.random()*6 + 0.5)), 2);
 
 
 class Orange {
@@ -557,7 +568,7 @@ let scorePanel = function(){
     panelLife.innerHTML = `'counter of life' ${counterLife}`;
     panelStars.innerHTML=`'counter of stars' ${counterStars}`;
     panelRocks.innerHTML=`'counter of rock' ${counterRock}`;
-    panelStones.innerHTML=`'counter of selectors' ${counterStones}`;
+    panelStones.innerHTML=`'counter of selectors' ${counterSelectors}`;
     panel.classList.add('score');
     modal.appendChild(panel);
     modal.appendChild(panelLife);

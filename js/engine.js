@@ -190,8 +190,8 @@ var Engine = (function(global) {
           //console.log(this.star);
         });
         //stone render
-        for(let stone of allStones){
-            stone.render();
+        for(let selector of allSelectors){
+            selector.render();
         }
         for(let orange of allOranges){
             orange.render();
