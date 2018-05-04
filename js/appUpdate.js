@@ -145,17 +145,21 @@ class Player {
     }
     //check collision with selectors
     checkCollisionWithSelectors(){
-        if(this.y > 374 && this.y<539){
-        for(selector of allSelectors){
-            if(!(selector.x2 < this.x1 || selector.x1 > this.x2)){
-                if(!(selector.y2 < this.y1 || selector.y1 > this.y2)){
-                    console.log('====Collision with selector ====');
-                    counterSelectors +=100;
-                    console.log(counterSelectors);
-                    selector.clear();
+        if(this.y > 380 && this.y<497){
+            console.log('====Zone with selectors ====');
+                for(selector of allSelectors){
 
-              }
-          }
+                    if(!(selector.x2 < this.x1 || selector.x1 > this.x2)){
+                       if (!(selector.y2 < this.y1 || selector.y1 > this.y2)) {
+                        console.log('====Collision with selector ====');
+                        counterSelectors +=100;
+                        //this.setPlayerCoordinates(703,1130);
+                        selector.clear();
+                    }
+
+
+
+           }
         }
     }
 }
@@ -244,7 +248,7 @@ class Player {
     update(){
         this.setPlayerCoordinates(this.x + this.dx,this.y + this.dy);
         this.checkCollisionWithRock();
-        //this.checkCollisionWithSelectors();
+        this.checkCollisionWithSelectors();
         this.checkContactWithWater();
         this.getNewPosition(this.x, maxPosition.x);
         this.getNewPosition(this.y, maxPosition.y);
@@ -288,14 +292,14 @@ class Selector {
 
    setSelectorX(x){
         this.x = x;
-        this.x1 = this.x+4;  //actual position of figure stone by OX
-        this.x2 = this.x1+93;
+        this.x1 = this.x+1;  //actual position of figure stone by OX
+        this.x2 = this.x1+100;
     }
 
     setSelectorY(y){
         this.y = y;
-        this.y1 = this.x+58;  //actual position of fige stone by OY
-        this.y2 = this.y1+103;
+        this.y1 = this.x+90;  //actual position of fige stone by OY
+        this.y2 = this.y1+80;
     }
 
 
@@ -304,7 +308,7 @@ class Selector {
     }
 
     clear(){
-        ctx.clearRect(Resources.get(this.sprite), this.x, this.y);
+        ctx.clearRect(this.x, this.y, 100, 80);
     }
 }
 
