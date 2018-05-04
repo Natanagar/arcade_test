@@ -166,23 +166,19 @@ class Player {
             console.log ('======================= player in the dangerous zone with rock');
         for(rock of allRocks) {
             if(!(rock.x2 < this.x1 || rock.x1 > this.x2)||(rock.y2 < this.y1 || rock.y1 > this.y2)) {
-                    //a.y > b.y1 || a.y1 < b.y || a.x1 < b.x || a.x > b.x1
                     console.log('====Collision with rock ====');
-                    /*counterRock+=100;
+                    counterRock+=100;
                     if(counterRock == 500){
                         counterLife-=1;
                     }
 
-
-                    console.log(counterRock, counterLife)
-
                     this.setPlayerCoordinates(703,1130);
-                        }*/
-                    }
+
+
                 }
 
            }
-
+        }
     }
 
 
