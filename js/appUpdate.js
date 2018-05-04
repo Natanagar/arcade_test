@@ -164,6 +164,7 @@ class Player {
                 if(!(stone.y2 < this.y1 || stone.y1 > this.y2)){
                     console.log('====Collision with stone ====');
                     counterStones +=100;
+                    console.log(counterStones);
                     makeCollision = true;
 
               }
