@@ -155,7 +155,9 @@ class Player {
                         console.log('Collision with Selector occured.');
                         counterSelectors +=100;
                         //this.setPlayerCoordinates(703,1130);
-                        selector.clear(allSelectors.indexOf(Selector));
+                        let index = allSelectors.indexOf(selector);
+                        console.log(`index to delete:' ${index}`);
+                        selector.clear(index);
                     }
                 }
         }
@@ -307,7 +309,9 @@ class Selector {
 
     clear(index){
         console.log('Trying to clear Selector...');
+        //console.dir(allSelectors);
         allSelectors.splice(index,1);
+        console.dir(allSelectors);
     }
 }
 
