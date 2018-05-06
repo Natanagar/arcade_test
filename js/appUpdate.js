@@ -14,20 +14,6 @@ let allEnemies = [],
     allSelectors = [],
     allOranges = [],
     allBlueGems = [],
-    bluegem,
-    sprite,
-    orange,
-    selector,
-    rock,
-    star,
-    dt,
-    speed,
-    player,
-    image,
-    dx,
-    dy,
-    firstPosition,
-    deltaPosition,
     maxGameboard,
     counterLife = 5,
     counterCollision = 0,
@@ -39,6 +25,18 @@ let allEnemies = [],
         x : 1506,
         y : 1205
     }; //actual position y 400
+    startPlayerPosition = {
+        x : 703,
+        y : 1130
+    };
+    playerStepSize = {
+        x : 101,
+        y : 83
+    };
+    selectorZone = {
+        y1 : 380,
+        y2 : 497
+    }
 
 
 // Enemies our player must avoid
@@ -50,19 +48,19 @@ let allEnemies = [],
 class Enemy{
     constructor(x, y, speed){
         this.sprite = 'images/enemy-bug.png';
-        this.setEnemyY(y);
-        this.setEnemyX(x);
+        this.setY(y);
+        this.setX(x);
         this.speed = speed;
     }
 
-    setEnemyY(y){
+    setY(y){
         // Enemy's Y coordinate stays the same during the game run
         this.y = y;
         this.y1 = this.y + 78;
         this.y2 = this.y1 + 66;
     }
 
-    setEnemyX(x){
+    setX(x){
         this.x = x;
         // (x1,y1) - left upper point of the bug figure
         this.x1 = this.x + 2;
@@ -70,7 +68,7 @@ class Enemy{
         this.x2 = this.x1 + 96;
     }
 
-    checkCoordinats(x,y,speed){
+    returnOnBoardIfOut(){
         if (this.x >=1506){
             this.x = -100;
             this.speed = Math.round((Math.random()*250) + (Math.random()*250)); //actual version
@@ -85,8 +83,8 @@ class Enemy{
         // which will ensure the game runs at the same speed for
         // all computers.
         // Enemy moves only to the right, y coordinate stays the same.
-        this.setEnemyX(this.x + dt * this.speed);
-        this.checkCoordinats();
+        this.setX(this.x + dt * this.speed);
+        this.returnOnBoardIfOut();
 
     }
     // Draw the enemy on the screen, required method for game
@@ -98,17 +96,17 @@ class Enemy{
 
 //player
 class Player {
-    constructor(x, y){
+    constructor(){
         // actual char-boy.png figure width = 68 px, height = 75 px
         this.sprite = 'images/char-boy.png';
-        this.setPlayerCoordinates(x,y);
+        this.goToStartPosition();
         this.dx = 0;
         this.dy = 0;
         this.counterLife = counterLife;
         this.counterCollision = counterCollision;
     }
 
-    setPlayerCoordinates(x,y){
+    moveTo(x,y){
         this.x = x;
         this.y = y;
         // (x1,y1) - left upper point of the boy figure
@@ -119,50 +117,49 @@ class Player {
         this.y2 = this.y1 + 61;// actual height +75
     }
 
-    getNewPosition(position, maxGameboard, speed){
-        //console.log(allowedKeys);
-            if (position == this.x){
-                maxGameboard = maxPosition.x;
-            } else {
-                maxGameboard = maxPosition.y;
-            }
+    goToStartPosition() {
+        this.moveTo(startPlayerPosition.x,startPlayerPosition.y);
+    }
 
-            if (position<= -80 || position >= maxGameboard){
-                this.x = 703;
-                this.y = 1130;
-
-            }
+    ifOutOfBoardGoToStartPosition(){
+        if(this.x< -80 || this.x > maxPosition.x || this.y< -80 || this.y > maxPosition.y){
+            this.goToStartPosition();
         }
+    }
+
+    ifCollisionOccuredWith(opponent) {
+        if(!((opponent.x2 < this.x1 || opponent.x1 > this.x2)||(opponent.y2 < this.y1 || opponent.y1 > this.y2))){
+                  return true;
+              }
+    }
+
     //check collision with oranges
-    checkCollisionWithOrange(x,y){
+    checkCollisionWithOrange(){
         //check coordinates
         for(orange of allOranges){
-            if((orange.x2 < this.x1 || orange.x1 > this.x2)||(orange.y2 < this.y1 || orange.y1 > this.y2)){
+            //if(!((orange.x2 < this.x1 || orange.x1 > this.x2)||(orange.y2 < this.y1 || orange.y1 > this.y2))){
+            if(this.ifCollisionOccuredWith(orange)) {
                   console.log('====Collision with orange ====');
                     //this.setPlayerCoordinates(703,1130);
               }
           }
     }
-    //check collision with selectors
-    checkCollisionWithSelectors(){
-        if(this.y > 380 && this.y<497){
-            console.log('====Zone with selectors ====');
-                for(selector of allSelectors){
 
-                    if(!(selector.x2 < this.x1 || selector.x1 > this.x2)){
-                       if (!(selector.y2 < this.y1 || selector.y1 > this.y2)) {
-                        console.log('====Collision with selector ====');
+    //check collision with selectors
+    checkCollisionWithSelectors() {
+        if(this.y > selectorZone.y1 && this.y < selectorZone.y2) {
+            console.log('====Zone with selectors ====');
+
+                for(selector of allSelectors) {
+                    if(this.ifCollisionOccuredWith(selector)) {
+                        console.log('Collision with Selector occured.');
                         counterSelectors +=100;
                         //this.setPlayerCoordinates(703,1130);
-                        selector.clear();
+                        selector.clear(allSelectors.indexOf(Selector));
                     }
-
-
-
-           }
+                }
         }
     }
-}
 
     //check collision with rock
     checkCollisionWithRock(){
@@ -176,7 +173,7 @@ class Player {
                         counterLife-=1;
                     }
 
-                    this.setPlayerCoordinates(703,1130);
+                    this.goToStartPosition();
 
 
                 }
@@ -195,6 +192,7 @@ class Player {
               }
           }
     }
+
     checkContactWithWater(x,y){
         if (this.y > 839 && this.y < 1005){
             console.log(' 839 and 1005 contact with water');
@@ -238,7 +236,7 @@ class Player {
                     //console.log(`player_x2: ${Math.round(this.x2)} >= ${Math.round(enemy.x1)} :enemy__x1`);
                     //console.log(``);
                     console.log('================================================')
-                    this.setPlayerCoordinates(703,1130);
+                    this.goToStartPosition();
                 }
 
             }
@@ -246,12 +244,12 @@ class Player {
     }
 
     update(){
-        this.setPlayerCoordinates(this.x + this.dx,this.y + this.dy);
+        this.moveTo(this.x + this.dx,this.y + this.dy);
         this.checkCollisionWithRock();
         this.checkCollisionWithSelectors();
         this.checkContactWithWater();
-        this.getNewPosition(this.x, maxPosition.x);
-        this.getNewPosition(this.y, maxPosition.y);
+        this.ifOutOfBoardGoToStartPosition();
+        //this.getNewPosition(this.y, maxPosition.y);
         this.checkCollisionSideByPlayer();
         this.dx = 0;
         this.dy = 0;
@@ -268,13 +266,13 @@ class Player {
         // if allowedKeys = 37, move to left
         //console.log(allowedKeys);
         if(true && allowedKeys == "up"){
-            this.dy += -83;
+            this.dy -= playerStepSize.y;
         } else if(true && allowedKeys == "down"){
-            this.dy += 83;
+            this.dy += playerStepSize.y;
         } else if(true && allowedKeys == "left"){
-            this.dx += -101;
+            this.dx -= playerStepSize.x;
         } else if (true && allowedKeys == "right"){
-            this.dx += 101;
+            this.dx += playerStepSize.x;
         }
     }
 
@@ -298,7 +296,7 @@ class Selector {
 
     setSelectorY(y){
         this.y = y;
-        this.y1 = this.x+90;  //actual position of fige stone by OY
+        this.y1 = this.y+90;  //actual position of fige stone by OY
         this.y2 = this.y1+80;
     }
 
@@ -307,8 +305,9 @@ class Selector {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    clear(){
-        ctx.clearRect(this.x, this.y, 100, 80);
+    clear(index){
+        console.log('Trying to clear Selector...');
+        allSelectors.splice(index,1);
     }
 }
 
@@ -394,10 +393,13 @@ let generateStars = function(maximumNumberOfItems, firstYCoordinate){
         allStars.push(star);
     }
 };
+
 generateStars(Math.round(Math.random()*5+0.5), -2);
 
+//generateStars(1, -2);
 
-player = new Player(703, 1130);
+
+player = new Player();
 let generateEnemies = function(){
 
     //generate new enemies
@@ -418,11 +420,13 @@ let generateEnemies = function(){
     allEnemies.push(enemy6);
     allEnemies.push(enemy7);
 }();
+
 //generate stones
 let generateSelector = function(maximumNumberOfItems, positionOY){
     if(positionOY===1){
             firstYCoordinate = 374;
-        } else if(positionOY===2){firstYCoordinate = 457};
+        }
+    else if(positionOY===2){firstYCoordinate = 457};
     for(let i=0; i<maximumNumberOfItems; i++){
         firstXCoordinate = (Math.round(Math.random()*15)*101);
         selector = new Selector(firstXCoordinate, firstYCoordinate);
@@ -433,7 +437,7 @@ let generateSelector = function(maximumNumberOfItems, positionOY){
 //generate stone in two positions
 generateSelector(Math.round((Math.random()*6 + 0.5)), 1);
 generateSelector(Math.round((Math.random()*6 + 0.5)), 2);
-
+//generateSelector(1, 1);
 
 class Orange {
     constructor(x, y, speed){
