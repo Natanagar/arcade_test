@@ -132,8 +132,8 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 2 of 4 of stone
                 'images/stone-block.png',   // Row 3 of 4 of stone
                 'images/stone-block.png',   // Row 4 of 4 of stone
-                'images/water-block.png',   // Row 1 is 2 water
-                'images/water-block.png',   // Row 2 is 2 water
+                'images/grass-block.png',
+                'images/grass-block.png',   // Row 2 is 2 water
                 'images/grass-block.png',   // Row 1 of 2 of secondgrass
                 'images/grass-block.png'    // Row 2 of 2 of secondgrass
             ],
@@ -201,6 +201,9 @@ var Engine = (function(global) {
         for(let bluegem of allBlueGems){
             bluegem.render();
         }
+        for(let key of allKeys){
+            key.render();
+        }
 
 
     }
@@ -225,6 +228,7 @@ var Engine = (function(global) {
         'images/enemy-bug_invert.png',
         'images/Rock.png',
         'images/Star.png',
+        'images/Key.png',
         'images/Selector.png',
         'images/Gem Orange.png',
         'images/Gem Blue.png',
