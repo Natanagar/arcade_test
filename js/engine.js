@@ -181,7 +181,9 @@ var Engine = (function(global) {
 
         allRocks.forEach((rock) => {
           rock.render();
-        });
+          console.log(`ROCK Y1 ${rock.y1}`);
+          console.log(`ROCK Y2 ${rock.y2}`);
+         });
 
 
         //star render

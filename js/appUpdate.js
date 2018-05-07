@@ -214,13 +214,19 @@ class Player {
         } else if(this.y > 42 && this.y < 208){ //update actual coordinats for water blocks 42(1/2 height block)
             console.log('===========Contact with water');
             if (this.y> 42 && this.y <125 ){
+                console.log(`player OY coordinates ${this.y}`);
+                console.log(`player y1 ${this.y1}`);
+                console.log(`player y2 ${this.y2}`);
                 this.checkCollisionWithRock();
-                this.checkCollisionWithBlueGems();
+                //this.checkCollisionWithBlueGems();
 
 
             } else if (this.y >=125 && this.y < 208){
+                console.log(`player.y ${this.y}`);
+                console.log(`player y1 ${this.y1}`);
+                console.log(`player y2 ${this.y2}`);
                 this.checkCollisionWithRock();
-                this.checkCollisionWithOrange();
+                //this.checkCollisionWithOrange();
 
 
             }
@@ -253,7 +259,10 @@ class Player {
     }
     checkCollisionWithRock(){
         if(!(this.ifCollisionOccuredWith(rock))){
+            console.log(`========== this is not a collision===========`);
             this.goToStartPosition();
+        } else {
+            console.log('=======collision with rocks==========');
         }
     }
 
@@ -553,7 +562,7 @@ class Rock {
 //generate rocks
 let generateRocks = function(maximumNumberOfItems, positionOY){
     if(positionOY===1){
-            firstYCoordinate = 50;// get coordinates by Oy
+            firstYCoordinate = 42;// get coordinates by Oy
         }
     else if(positionOY===2){firstYCoordinate = 132}; //get coordinates by OY
     for(let i=0; i<maximumNumberOfItems; i++){
@@ -564,8 +573,10 @@ let generateRocks = function(maximumNumberOfItems, positionOY){
 
 };
 //generate rocks in two positions
-generateRocks(Math.round((Math.random()*8 + 0.5)), 1);
-generateRocks(Math.round((Math.random()*8 + 0.5)), 2);
+generateRocks(Math.round((Math.random() + 0.5)), 2);
+generateRocks(Math.round((Math.random() + 0.5)), 2);// two rocks
+//generateRocks(Math.round((Math.random()*6 + 4.5)), 1);
+//generateRocks(Math.round((Math.random()*6 + 4.5)), 2);
 //generateSelector(1, 1);
 
 
