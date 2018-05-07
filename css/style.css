@@ -40,4 +40,11 @@ button.reload:focus {
     text-decoration: none;
     cursor: pointer;
 }
+.hide{
+    display: none;
+}
+
+.show {
+    display: block;
+}
 

@@ -218,8 +218,8 @@ class Player {
             console.log(`player y1 ${this.y1}`);
             console.log(`player y2 ${this.y2}`);
             //this.checkCollisionWithRock();
-            this.checkCollisionWithOrange();
-            this.checkCollisionWithBlueGems();
+            //this.checkCollisionWithOrange();
+            //this.checkCollisionWithBlueGems();
         } //update actual coordinats for water blocks 42(1/2 height block)
 
     }
@@ -656,7 +656,7 @@ let toGoStart = function(event){
     let pressElement = event.target;
     let newElement = pressElement.parentElement.parentElement;
     console.log(newElement);
-    newElement.style.display = "none";
+    newElement.classList.ad('hide');
     //console.log(reload);
 
 
