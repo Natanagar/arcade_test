@@ -656,7 +656,7 @@ let toGoStart = function(event){
     let pressElement = event.target;
     let newElement = pressElement.parentElement.parentElement;
     console.log(newElement);
-    newElement.classList.ad('hide');
+    newElement.classList.add('hide');
     //console.log(reload);
 
 
