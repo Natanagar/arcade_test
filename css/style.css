@@ -13,6 +13,7 @@ body {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    font-size: 150%;
 }
 .modal-content {
     background-color: #fefefe;
@@ -20,21 +21,23 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    height: 150px;
+    height: 500px;
     text-align: center;
     animation-name: animatetop;
     animation-duration: 0.4s
 }
-span.btn{
+button.reload{
     color: #aaaaaa;
-    float: right;
+    float: center;
     font-size: 28px;
-    font-weight: bold;   
+    font-weight: bold;  
+    background-color: blue;
 }
 
-span.btn:hover,
-span.btn:focus {
+button.reload:hover,
+button.reload:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
 }
+

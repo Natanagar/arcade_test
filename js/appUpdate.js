@@ -1,4 +1,6 @@
 const modal = document.querySelector('.modal');
+const reload = document.querySelector('.reload');
+console.log(reload);
 
 const playerList = [
 'images/char-boy.png',
@@ -242,9 +244,9 @@ class Player {
         }
     }
     checkEndOfGame(){
-        console.log(` Array with star (length) ${allStars.length}`);
+        //console.log(` Array with star (length) ${allStars.length}`);
        if(allStars.length == 0){
-            console.log(`========show modal window=======`);
+            //console.log(`========show modal window=======`);
             modal.style.display = 'block';
         }
     }
@@ -649,27 +651,18 @@ blueRandom(Math.round(Math.random()*5+0.5),1415, 54, -350);
 //the second range of gems by OY 880
 blueRandom(Math.round(Math.random()*5+0.5),1415, 880, -350);
 
+let toGoStart = function(event){
+    alert('Hura!');
+    let pressElement = event.target;
+    let newElement = pressElement.parentElement.parentElement;
+    console.log(newElement);
+    newElement.style.display = "none";
+    //console.log(reload);
 
-let scorePanel = function(){
-    let panel = document.createElement('div');
-    let panelLife = document.createElement('span');
-    let panelStars = document.createElement('span');
-    let panelRocks = document.createElement('span');
-    let panelStones = document.createElement('span');
-    panelLife.classList.add('counter');
-    panelStars.classList.add('counter');
-    panelRocks.classList.add('counter');
-    panelStones.classList.add('counter');
-    panelLife.innerHTML = `'counter of life' ${counterLife}`;
-    panelStars.innerHTML=`'counter of stars' ${counterStars}`;
-    panelRocks.innerHTML=`'counter of rock' ${counterRock}`;
-    panelStones.innerHTML=`'counter of selectors' ${counterSelectors}`;
-    panel.classList.add('score');
-    modal.appendChild(panel);
-    modal.appendChild(panelLife);
 
-}();
-
+    //modal.style.display = "none";
+    //console.log("=====Go to start=========");// Todo...
+};
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -693,3 +686,5 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+reload.addEventListener('click', toGoStart);

@@ -181,8 +181,8 @@ var Engine = (function(global) {
 
         allRocks.forEach((rock) => {
           rock.render();
-          console.log(`ROCK Y1 ${rock.y1}`);
-          console.log(`ROCK Y2 ${rock.y2}`);
+          //console.log(`ROCK Y1 ${rock.y1}`);
+          //console.log(`ROCK Y2 ${rock.y2}`);
          });
 
 
@@ -207,8 +207,8 @@ var Engine = (function(global) {
         }
         //player.render();
         player.render();
-        console.log(`Player Y1 ${player.y1}`);
-        console.log(`Player Y2 ${player.y2}`);
+        //console.log(`Player Y1 ${player.y1}`);
+        //console.log(`Player Y2 ${player.y2}`);
 
     }
 
