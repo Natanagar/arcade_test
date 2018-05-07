@@ -215,35 +215,11 @@ class Player {
             console.log(`player OY coordinates ${this.y}`);
             console.log(`player y1 ${this.y1}`);
             console.log(`player y2 ${this.y2}`);
-            this.checkCollisionWithRock();
-            //this.checkCollisionWithOrange();
-            //this.checkCollisionWithBlueGems();
+            //this.checkCollisionWithRock();
+            this.checkCollisionWithOrange();
+            this.checkCollisionWithBlueGems();
         } //update actual coordinats for water blocks 42(1/2 height block)
 
-
-
-            /*console.log('===========Contact with water');
-            if (this.y> 42 && this.y <125 ){
-                //console.log(`player OY coordinates ${this.y}`);
-                //console.log(`player y1 ${this.y1}`);
-                //console.log(`player y2 ${this.y2}`);
-                this.checkCollisionWithRock();
-                //this.checkCollisionWithBlueGems();
-
-
-            } else if (this.y >=125 && this.y < 208){
-                //console.log(`player.y ${this.y}`);
-                //console.log(`player y1 ${this.y1}`);
-                //console.log(`player y2 ${this.y2}`);
-                this.checkCollisionWithRock();
-                this.checkCollisionWithOrange();
-
-
-            }
-
-            counterLife += 1;
-            return counterLife;
-        }*/
     }
     checkCollisionWithStar(){
         if(this.y1 >=-2 && this.y1 <= 83){
@@ -257,13 +233,19 @@ class Player {
                         star.clear(index);
                         console.dir(allStars);
                         break;
-                        if(allStars.lenght = 0){
-                            console.log(`========show modal window=======`);
-                        }
+
 
                 }
 
             }
+
+        }
+    }
+    checkEndOfGame(){
+        console.log(` Array with star (length) ${allStars.length}`);
+       if(allStars.length == 0){
+            console.log(`========show modal window=======`);
+            modal.style.display = 'block';
         }
     }
     checkCollisionWithRock(){
@@ -293,7 +275,9 @@ class Player {
     }
 
     update(){
+
         this.moveTo(this.x + this.dx,this.y + this.dy);
+        this.checkEndOfGame();
         this.checkCollisionWithKeys();
         this.checkCollisionWithSelectors();
         this.checkZoneWithOrangeBlue();
