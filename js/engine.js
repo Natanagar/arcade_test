@@ -178,8 +178,7 @@ var Engine = (function(global) {
 
 
 
-        //player.render();
-        player.render();
+
         allRocks.forEach((rock) => {
           rock.render();
         });
@@ -204,7 +203,8 @@ var Engine = (function(global) {
         for(let key of allKeys){
             key.render();
         }
-
+        //player.render();
+        player.render();
 
     }
 

@@ -214,10 +214,14 @@ class Player {
         } else if(this.y > 42 && this.y < 208){ //update actual coordinats for water blocks 42(1/2 height block)
             console.log('===========Contact with water');
             if (this.y> 42 && this.y <125 ){
+                this.checkCollisionWithRock();
                 this.checkCollisionWithBlueGems();
 
+
             } else if (this.y >=125 && this.y < 208){
+                this.checkCollisionWithRock();
                 this.checkCollisionWithOrange();
+
 
             }
 
@@ -245,6 +249,11 @@ class Player {
                 }
 
             }
+        }
+    }
+    checkCollisionWithRock(){
+        if(!(this.ifCollisionOccuredWith(rock))){
+            this.goToStartPosition();
         }
     }
 
@@ -542,12 +551,11 @@ class Rock {
 
 }
 //generate rocks
-//generate selector
 let generateRocks = function(maximumNumberOfItems, positionOY){
     if(positionOY===1){
-            firstYCoordinate = 374;// get coordinates by Oy
+            firstYCoordinate = 50;// get coordinates by Oy
         }
-    else if(positionOY===2){firstYCoordinate = 457}; //get coordinates by OY
+    else if(positionOY===2){firstYCoordinate = 132}; //get coordinates by OY
     for(let i=0; i<maximumNumberOfItems; i++){
         firstXCoordinate = (Math.round(Math.random()*15)*101);
         rock = new Rock(firstXCoordinate, firstYCoordinate);
@@ -556,8 +564,8 @@ let generateRocks = function(maximumNumberOfItems, positionOY){
 
 };
 //generate rocks in two positions
-generateRocks(Math.round((Math.random()*6 + 0.5)), 1);
-generateRocks(Math.round((Math.random()*6 + 0.5)), 2);
+generateRocks(Math.round((Math.random()*8 + 0.5)), 1);
+generateRocks(Math.round((Math.random()*8 + 0.5)), 2);
 //generateSelector(1, 1);
 
 
