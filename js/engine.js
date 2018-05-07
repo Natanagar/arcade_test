@@ -207,6 +207,8 @@ var Engine = (function(global) {
         }
         //player.render();
         player.render();
+        console.log(`Player Y1 ${player.y1}`);
+        console.log(`Player Y2 ${player.y2}`);
 
     }
 

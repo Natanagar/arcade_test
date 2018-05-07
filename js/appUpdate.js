@@ -204,40 +204,46 @@ class Player {
           }
     }
 
-    checkContactWithWater(x,y){
+    checkZoneWithOrangeBlue(x,y){
         if (this.y > 839 && this.y < 1005){
             console.log(' 839 and 1005 contact with water');
             console.log ('=======================');
             this.checkCollisionWithOrange();
             this.checkCollisionWithBlueGems();
 
-        } else if(this.y > 42 && this.y < 208){ //update actual coordinats for water blocks 42(1/2 height block)
-            console.log('===========Contact with water');
+        } else if(this.y > 42 && this.y < 208){
+            console.log(`player OY coordinates ${this.y}`);
+            console.log(`player y1 ${this.y1}`);
+            console.log(`player y2 ${this.y2}`);
+            this.checkCollisionWithRock();
+            //this.checkCollisionWithOrange();
+            //this.checkCollisionWithBlueGems();
+        } //update actual coordinats for water blocks 42(1/2 height block)
+
+
+
+            /*console.log('===========Contact with water');
             if (this.y> 42 && this.y <125 ){
-                console.log(`player OY coordinates ${this.y}`);
-                console.log(`player y1 ${this.y1}`);
-                console.log(`player y2 ${this.y2}`);
+                //console.log(`player OY coordinates ${this.y}`);
+                //console.log(`player y1 ${this.y1}`);
+                //console.log(`player y2 ${this.y2}`);
                 this.checkCollisionWithRock();
                 //this.checkCollisionWithBlueGems();
 
 
             } else if (this.y >=125 && this.y < 208){
-                console.log(`player.y ${this.y}`);
-                console.log(`player y1 ${this.y1}`);
-                console.log(`player y2 ${this.y2}`);
+                //console.log(`player.y ${this.y}`);
+                //console.log(`player y1 ${this.y1}`);
+                //console.log(`player y2 ${this.y2}`);
                 this.checkCollisionWithRock();
-                //this.checkCollisionWithOrange();
+                this.checkCollisionWithOrange();
 
 
             }
 
             counterLife += 1;
-            //console.log(counterLife);
-            //return to first position of player
-            //this.x = 703;
-            //this.y = 1130;
             return counterLife;
-        }
+        }*/
     }
     checkCollisionWithStar(){
         if(this.y1 >=-2 && this.y1 <= 83){
@@ -249,21 +255,28 @@ class Player {
                         let index = allStars.indexOf(star);
                         console.log(`index to delete:' ${index}`);
                         star.clear(index);
-                        console.dir(allSelectors);
+                        console.dir(allStars);
                         break;
-                //show modal window
+                        if(allStars.lenght = 0){
+                            console.log(`========show modal window=======`);
+                        }
+
                 }
 
             }
         }
     }
     checkCollisionWithRock(){
-        if(!(this.ifCollisionOccuredWith(rock))){
-            console.log(`========== this is not a collision===========`);
-            this.goToStartPosition();
-        } else {
-            console.log('=======collision with rocks==========');
+        for(rock of allRocks){
+            if(this.ifCollisionOccuredWith(rock)){
+                console.log('=======collision with rocks==========');
+                } else {
+                console.log(`========== this is not a collision===========`);
+                this.goToStartPosition();
+
+            }
         }
+
     }
 
     checkCollisionSideByPlayer(){
@@ -283,7 +296,7 @@ class Player {
         this.moveTo(this.x + this.dx,this.y + this.dy);
         this.checkCollisionWithKeys();
         this.checkCollisionWithSelectors();
-        this.checkContactWithWater();
+        this.checkZoneWithOrangeBlue();
         this.ifOutOfBoardGoToStartPosition();
         //this.getNewPosition(this.y, maxPosition.y);
         this.checkCollisionSideByPlayer();
