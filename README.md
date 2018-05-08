@@ -20,4 +20,4 @@ Dependencies: canvas
 
 Contributing: Every contribution is welcome.
 
-[You can play online in this page:](https://natanagar.github.io/arcade_test/) 
+[You can play online in this page](https://natanagar.github.io/arcade_test/) 
