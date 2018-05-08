@@ -1,6 +1,6 @@
 const modal = document.querySelector('.modal');
 const reload = document.querySelector('.reload');
-console.log(reload);
+//console.log(reload);
 
 const playerList = [
 'images/char-boy.png',
@@ -40,7 +40,11 @@ let allEnemies = [],
     selectorZone = {
         y1 : 380,
         y2 : 497
-    }
+    };
+      positionRockByOY ={
+        y1: 42,
+        y2: 132
+    };
 
 
 // Enemies our player must avoid
@@ -116,10 +120,10 @@ class Player {
         this.y = y;
         // (x1,y1) - left upper point of the boy figure
         this.x1 = this.x + 19;
-        this.y1 = this.y + 80;// actual position +64
+        this.y1 = this.y + 85;// actual position +80
         // (x2,y2) - left upper point of the boy figure
         this.x2 = this.x1 + 68;
-        this.y2 = this.y1 + 61;// actual height +75
+        this.y2 = this.y1 + 61;// actual height 61
         // Reset dx and dy
         this.dx = 0;
         this.dy = 0;
@@ -542,7 +546,7 @@ class Orange {
     setOrangeY(y) {
         // Gemss Y coordinate stays the same during the game run
         this.y = y;
-        this.y1 = this.y + 58;
+        this.y1 = this.y + 66; //actual position with bug (collision in another line gamefield) +58
         this.y2 = this.y1 + 104;
     }
 
@@ -609,14 +613,13 @@ class Rock {
 }
 //generate rocks
 let generateRocks = function(maximumNumberOfItems, positionOY){
-    if(positionOY===1){
-            firstYCoordinate = 42;// get coordinates by Oy
-        }
-    else if(positionOY===2){firstYCoordinate = 132}; //get coordinates by OY
+
     for(let i=0; i<maximumNumberOfItems; i++){
         firstXCoordinate = (Math.round(Math.random()*15)*101);
-        rock = new Rock(firstXCoordinate, firstYCoordinate);
+        rock = new Rock(firstXCoordinate, positionOY);
+        //rock = new Rock(firstXCoordinate, positionOY);
         allRocks.push(rock);
+        console.dir(rock);
     }
 
 };
@@ -699,8 +702,9 @@ let startGame = function(star, key, orange, bluegem, selector, enemy, rock){
     //the second range of oranges by OY 963
     orangeRandom(Math.round(Math.random()*5+0.5), -100, 963, 250);
     //generate rocks in two positions
-    generateRocks(Math.round((Math.random() + 0.5)), 2);
-    generateRocks(Math.round((Math.random() + 0.5)), 2);// two rocks
+    generateRocks(Math.round((Math.random()*5 + 5.5)), 42);
+    generateRocks(Math.round((Math.random()*5 + 5.5)), 132);
+    //generateRocks(Math.round((Math.random()*5 + 0.5)), positionRockByOY.y2);// two rocks
     //generate stone in two positions
     generateSelector(Math.round((Math.random()*6 + 0.5)), 1);
     generateSelector(Math.round((Math.random()*6 + 0.5)), 2);
