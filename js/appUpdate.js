@@ -311,12 +311,16 @@ class Player {
         //console.log(` Array with star (length) ${allStars.length}`);
        if(allStars.length == 0){
             console.log(`========show modal window=======`);
-            modal.style.display = 'block';
+            showModal();
+            setTimeout(() => {
+              hideModal()
+            },5000)
            //this.resetGame();
         }
     }
 
     resetGame() {
+          this.goToStartPosition();
         //allStars.length = 0;
            allRocks.length = 0;
            allEnemies.length = 0;
@@ -617,9 +621,7 @@ let generateRocks = function(maximumNumberOfItems, positionOY){
     for(let i=0; i<maximumNumberOfItems; i++){
         firstXCoordinate = (Math.round(Math.random()*15)*101);
         rock = new Rock(firstXCoordinate, positionOY);
-        //rock = new Rock(firstXCoordinate, positionOY);
         allRocks.push(rock);
-        console.dir(rock);
     }
 
 };
@@ -714,6 +716,15 @@ let startGame = function(star, key, orange, bluegem, selector, enemy, rock){
 
 }();
 
+//show modal window
+let showModal = function(){
+    modal.style.display = 'block';
+}
+//hide modal window
+let hideModal = function(){
+    modal.style.display = "none";
+}
+
 let toGoStart = function(event, star){
     alert('Hura!');
     //generateStars((Math.round(Math.random()*5+0.5), -2));
@@ -732,6 +743,9 @@ let toGoStart = function(event, star){
     //modal.style.display = "none";
     //console.log("=====Go to start=========");// Todo...
 };
+
+
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.

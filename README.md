@@ -1,6 +1,16 @@
 frontend-nanodegree-arcade-game
 ===============================
+Правила игры:
+У вас есть 5 попыток дойти до последней линии и собрать при этом максимальное количество звезд, селекторов и ключей.
+Нельзя сталкиваться с жуками и движущимися камнями. Вы потеряете попытку.
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+Цель игры: добраться до верхней линейки и собрать максимальное количество звезд
+Геймплей: для перемещения игрока используйте клавиши:
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Dependencies
+
+Contributing: For all developers, who wants make me pull-request.
+
+ Frogger Game Description
+
+Your implementation must at minimum follow the basic functionality, but you can add additional optional functionality to your game, if you wish.
