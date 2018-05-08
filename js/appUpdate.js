@@ -1,7 +1,3 @@
-const modal = document.querySelector('.modal');
-const reload = document.querySelector('.reload');
-//console.log(reload);
-
 const playerList = [
 'images/char-boy.png',
 'images/char-cat-girls.png',
@@ -179,6 +175,7 @@ class Player {
                 let index = allSelectors.indexOf(selector);
                 selector.clear(index);
                 break;
+                return counterSelectors;
             }
         }
     }
@@ -219,9 +216,11 @@ class Player {
                 star.clear(index);
                 console.dir(allStars);
                 break;
+
             }
 
         }
+        return counterStars;
     }
 
     checkCollisionWithOrange() {
@@ -307,21 +306,9 @@ class Player {
         }
     }
 
-    checkEndOfGame() {
-        //console.log(` Array with star (length) ${allStars.length}`);
-       if(allStars.length == 0){
-            console.log(`========show modal window=======`);
-            showModal();
-            setTimeout(() => {
-              hideModal()
-            },5000)
-           //this.resetGame();
-        }
-    }
-
     resetGame() {
           this.goToStartPosition();
-        //allStars.length = 0;
+            //allStars.length = 0;
            allRocks.length = 0;
            allEnemies.length = 0;
            allSelectors.length = 0;
@@ -341,8 +328,6 @@ class Player {
         this.checkCollisionWithKeys();
         this.checkCollisionWithWater();
         this.checkCollisionWithStar();
-
-        this.checkEndOfGame();
     }
 
     render() {
@@ -355,7 +340,7 @@ class Player {
     handleInput(allowedKeys){
         // player's movement
         // if allowedKeys = 37, move to left
-        //console.log(allowedKeys);
+
         if(true && allowedKeys == "up"){
             this.dy -= playerStepSize.y;
         } else if(true && allowedKeys == "down"){
@@ -491,40 +476,23 @@ class Star {
 
     }
 }
-let generateStars = function(maximumNumberOfItems, firstYCoordinate){
-    for(let i=0; i<maximumNumberOfItems; i++){
-        let firstXCoordinate = (Math.round((Math.random()*15))*101);
-        star = new Star(firstXCoordinate, firstYCoordinate);
+let generateStars = function(firstYCoordinate){
+
+    let nextX = 0;
+    while(true) {
+
+        let randomNumber = (Math.round((Math.random()*5) + 1)*101);//*15
+        nextX += randomNumber;
+        if( nextX > 1414 ) {
+            break;
+        }
+        star = new Star(nextX, firstYCoordinate);
         allStars.push(star);
+
     }
+    console.dir(allStars);
 };
 
-//generateStars(Math.round(Math.random()*5+0.5), -2);
-
-//generateStars(1, -2);
-
-
-player = new Player();
-let generateEnemies = function(){
-
-    //generate new enemies
-    let enemy = new Enemy(-100, 801, 350);
-    let enemy2 = new Enemy(-100, 561, 275);
-    let enemy3 = new Enemy(-100, 626, 400);
-    let enemy4 = new Enemy(-100, 712, 300);
-    let enemy5 = new Enemy(-100, 795, 400);
-    let enemy6 = new Enemy(1505, 712, -350);
-    let enemy7 = new Enemy(1505, 546, -450);
-
-    //add to allEnemies array
-    allEnemies.push(enemy);
-    allEnemies.push(enemy2);
-    allEnemies.push(enemy3);
-    allEnemies.push(enemy4);
-    allEnemies.push(enemy5);
-    allEnemies.push(enemy6);
-    allEnemies.push(enemy7);
-}();
 
 //generate selector
 let generateSelector = function(maximumNumberOfItems, positionOY){
@@ -548,7 +516,7 @@ class Orange {
         this.speed = speed;
     }
     setOrangeY(y) {
-        // Gemss Y coordinate stays the same during the game run
+        // Gems Y coordinate stays the same during the game run
         this.y = y;
         this.y1 = this.y + 66; //actual position with bug (collision in another line gamefield) +58
         this.y2 = this.y1 + 104;
@@ -621,7 +589,9 @@ let generateRocks = function(maximumNumberOfItems, positionOY){
     for(let i=0; i<maximumNumberOfItems; i++){
         firstXCoordinate = (Math.round(Math.random()*15)*101);
         rock = new Rock(firstXCoordinate, positionOY);
+        rock2 = new Rock(firstXCoordinate, positionOY+83);
         allRocks.push(rock);
+        allRocks.push(rock2);
     }
 
 };
@@ -690,62 +660,6 @@ let blueRandom = function(maximumNumberOfItems,firstXCoordinate, firstYCoordinat
     }
 };
 
-
-// this is additional function, it generates all instances
-let startGame = function(star, key, orange, bluegem, selector, enemy, rock){
-    generateStars(Math.round(Math.random()*5+0.5), -2);
-    generateStars(Math.round(Math.random()*5+0.5), -2);
-    //the first range of gems by OY 54
-    blueRandom(Math.round(Math.random()*5+0.5),1415, 54, -350);
-    //the second range of gems by OY 880
-    blueRandom(Math.round(Math.random()*5+0.5),1415, 880, -350);
-    //the first range of oranges by OY 137
-    orangeRandom(Math.round(Math.random()*5+0.5), -100, 137, 250);
-    //the second range of oranges by OY 963
-    orangeRandom(Math.round(Math.random()*5+0.5), -100, 963, 250);
-    //generate rocks in two positions
-    generateRocks(Math.round((Math.random()*5 + 5.5)), 42);
-    generateRocks(Math.round((Math.random()*5 + 5.5)), 132);
-    //generateRocks(Math.round((Math.random()*5 + 0.5)), positionRockByOY.y2);// two rocks
-    //generate stone in two positions
-    generateSelector(Math.round((Math.random()*6 + 0.5)), 1);
-    generateSelector(Math.round((Math.random()*6 + 0.5)), 2);
-    //generateSelector(1, 1);
-    generateKeys(Math.round(Math.random()*4+0.5),1);
-    generateKeys(Math.round(Math.random()*4+0.5),2);
-
-}();
-
-//show modal window
-let showModal = function(){
-    modal.style.display = 'block';
-}
-//hide modal window
-let hideModal = function(){
-    modal.style.display = "none";
-}
-
-let toGoStart = function(event, star){
-    alert('Hura!');
-    //generateStars((Math.round(Math.random()*5+0.5), -2));
-    //allStars.push(star);
-    //allStars.length = 1;
-    let pressElement = event.target;
-    let newElement = pressElement.parentElement.parentElement;
-    console.log(newElement);
-    newElement.classList.add('hide');
-    //player.resetGame();
-    //startGame();
-
-    //console.log(reload);
-
-
-    //modal.style.display = "none";
-    //console.log("=====Go to start=========");// Todo...
-};
-
-
-
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -770,4 +684,4 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-reload.addEventListener('click', toGoStart);
+

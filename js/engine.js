@@ -13,6 +13,14 @@
  * writing app.js a little simpler to work with.
  */
 
+ //variables
+const modal = document.querySelector('.modal');
+const reload = document.querySelector('.reload');
+
+
+//console.log(modal, reload, tokenStars, counterKeys, counterSelectors);
+
+
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
      * create the canvas element, grab the 2D context for that canvas
@@ -55,7 +63,22 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+
+
+         //true-false
+         if (gameFinished()) {
+                showModal();
+                init();
+                //console.log("==== Game is over ====");
+                gamePrepare();
+                reset();
+
+            }
+
+
+            win.requestAnimationFrame(main);
+
+
     }
 
     /* This function does some initial setup that should only occur once,
@@ -63,10 +86,15 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
-        lastTime = Date.now();
-        main();
+            //console.log('+++++++++init++++++++');
+            reset();
+            lastTime = Date.now();
+            main();
+
+
+
     }
+
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
@@ -94,6 +122,7 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
@@ -172,6 +201,7 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
@@ -217,7 +247,50 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        console.log('+++++++ reset+++++++');
+        //generate new enemies
+        let enemy = new Enemy(-100, 801, 350);
+        let enemy2 = new Enemy(-100, 561, 275);
+        let enemy3 = new Enemy(-100, 626, 400);
+        let enemy4 = new Enemy(-100, 712, 300);
+        let enemy5 = new Enemy(-100, 795, 400);
+        let enemy6 = new Enemy(1505, 712, -350);
+        let enemy7 = new Enemy(1505, 546, -450);
+
+        //add to allEnemies array
+        allEnemies.push(enemy);
+        allEnemies.push(enemy2);
+        allEnemies.push(enemy3);
+        allEnemies.push(enemy4);
+        allEnemies.push(enemy5);
+        allEnemies.push(enemy6);
+        allEnemies.push(enemy7);
+
+        //generate Stars
+        generateStars(-12);
+
+
+        //the first range of gems by OY 54
+        blueRandom(Math.round(Math.random()*5+0.5),1415, 54, -350);
+        //the second range of gems by OY 880
+        blueRandom(Math.round(Math.random()*5+0.5),1415, 880, -350);
+        //the first range of oranges by OY 137
+        orangeRandom(Math.round(Math.random()*5+0.5), -100, 137, 250);
+        //the second range of oranges by OY 963
+        orangeRandom(Math.round(Math.random()*5+0.5), -100, 963, 250);
+        //generate rocks in two positions
+        generateRocks(Math.round((Math.random()*3 + 0.5)), 42);
+        //generateRocks(Math.round((Math.random()*5 + 5.5)), 132);
+        //generateRocks(Math.round((Math.random()*5 + 0.5)), positionRockByOY.y2);// two rocks
+        //generate stone in two positions
+        generateSelector(Math.round((Math.random()*6 + 0.5)), 1);
+        generateSelector(Math.round((Math.random()*6 + 0.5)), 2);
+        //generateSelector(1, 1);
+        generateKeys(Math.round(Math.random()*4+0.5),1);
+        generateKeys(Math.round(Math.random()*4+0.5),2);
+
+        //generate player
+        player = new Player();// noop
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -238,6 +311,7 @@ var Engine = (function(global) {
         'images/Gem Blue.png',
         'images/char-boy.png'
     ]);
+
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
@@ -245,4 +319,43 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+
 })(this);
+
+ //content modal window
+ let modalWindowContent = function(){
+     document.querySelector('.counterStars').innerHTML = `Counter of stars ${counterStars}`;
+     document.querySelector('.counterSelectors').innerHTML = `Counter of selectors ${counterSelectors}`;
+     document.querySelector('.counterKeys').innerHTML = `Counter of keys ${counterKeys}`;
+}
+
+ //show modal window
+let showModal = function(){
+     modalWindowContent();
+     modal.style.display = 'block';
+}
+ //hide modal window
+let hideModal = function(){
+     modal.style.display = "none";
+ }
+
+let gameFinished = function() {
+
+        if (allStars.length == 0) return true;
+
+        return false;
+    }
+
+
+let gamePrepare = function(){
+    allStars.length = 0;
+    allSelectors.length = 0;
+    allOranges.length = 0;
+    allEnemies.length = 0;
+    allKeys.length = 0;
+    allBlueGems.length = 0;
+    allRocks.length = 0;
+}
+reload.addEventListener('click', (e)=>{
+     hideModal();
+});
