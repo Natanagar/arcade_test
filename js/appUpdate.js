@@ -72,8 +72,8 @@ class Enemy{
         this.x2 = this.x1 + 96;
     }
 
-    returnOnBoardIfOut(){
-        if (this.x >=1506){
+    returnOnBoardIfOut() {
+        if (this.x >=1506) {
             this.x = -100;
             this.speed = Math.round((Math.random()*250) + (Math.random()*250)); //actual version
             //console.log("enemy came out for edge");
@@ -82,7 +82,7 @@ class Enemy{
 
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
-    update (dt){
+    update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
@@ -92,25 +92,26 @@ class Enemy{
 
     }
     // Draw the enemy on the screen, required method for game
-    render(){
+    render() {
         //console.log(this.sprite);
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-        }
+
     }
+}
 
 //player
 class Player {
-    constructor(){
+
+    constructor() {
         // actual char-boy.png figure width = 68 px, height = 75 px
         this.sprite = 'images/char-boy.png';
         this.goToStartPosition();
-        this.dx = 0;
-        this.dy = 0;
         this.counterLife = counterLife;
         this.counterCollision = counterCollision;
     }
 
-    moveTo(x,y){
+    moveTo(x,y) {
+
         this.x = x;
         this.y = y;
         // (x1,y1) - left upper point of the boy figure
@@ -119,143 +120,128 @@ class Player {
         // (x2,y2) - left upper point of the boy figure
         this.x2 = this.x1 + 68;
         this.y2 = this.y1 + 61;// actual height +75
+        // Reset dx and dy
+        this.dx = 0;
+        this.dy = 0;
+        // Check Out of Board condition
+        this.ifOutOfBoardGoToStartPosition();
     }
 
     goToStartPosition() {
-        this.moveTo(startPlayerPosition.x,startPlayerPosition.y);
+
+        this.moveTo(startPlayerPosition.x,
+                    startPlayerPosition.y);
+
     }
 
     ifOutOfBoardGoToStartPosition(){
-        if(this.x< -80 || this.x > maxPosition.x || this.y< -80 || this.y > maxPosition.y){
+
+        if (   this.x < -80
+            || this.x > maxPosition.x
+            || this.y< -80
+            || this.y > maxPosition.y ) {
+
             this.goToStartPosition();
         }
     }
 
-    ifCollisionOccuredWith(opponent) {
-        if(!((opponent.x2 < this.x1 || opponent.x1 > this.x2)||(opponent.y2 < this.y1 || opponent.y1 > this.y2))){
-                  return true;
+    collidesWith(opponent) {
+
+        if ( !(opponent.x2 < this.x1
+            || opponent.x1 > this.x2
+            || opponent.y2 < this.y1
+            || opponent.y1 > this.y2) ) {
+
+            return true;
         }
+
         return false;
     }
 
-    //check collision with oranges
-    checkCollisionWithOrange(){
-        //check coordinates with orange range 137 range 963
+    checkCollisionWithSelectors() {
 
-            //console.log('==============Zone with Orange=================');
-           for(orange of allOranges){
-            if(this.ifCollisionOccuredWith(orange)) {
-                  console.log('====Collision with orange ====');
-                    this.goToStartPosition();
+        if (   this.y <= selectorZone.y1
+            || this.y >= selectorZone.y2 ) return;
 
+        console.log('====Zone with selectors ====');
+
+        for(selector of allSelectors) {
+
+            if(this.collidesWith(selector)) {
+
+                console.log('=== Collision with selector ===');
+                counterSelectors +=100;
+                //this.setPlayerCoordinates(703,1130);
+                let index = allSelectors.indexOf(selector);
+                selector.clear(index);
+                break;
             }
         }
     }
 
+    checkCollisionWithKeys() {
 
-    //check collision with selectors
-    checkCollisionWithSelectors() {
-        if(this.y > selectorZone.y1 && this.y < selectorZone.y2) {
-            console.log('====Zone with selectors ====');
+        if(this.y < 166 || this.y > 332) return;
 
-                for(selector of allSelectors) {
-                    if(this.ifCollisionOccuredWith(selector)) {
-                        console.log('Collision with Selector occured.');
+        console.log ('=== Zone with keys ===');
 
-                        counterSelectors +=100;
-                        //this.setPlayerCoordinates(703,1130);
-                        let index = allSelectors.indexOf(selector);
-                        console.log(`index to delete:' ${index}`);
-                        selector.clear(index);
-                        console.dir(allSelectors);
-                        break;
-                    }
-                }
-        }
-    }
-
-    //check collision with key
-    checkCollisionWithKeys(){
-        if(this.y >= 166 && this.y<= 332){
-            console.log ('======================= player in the zone with keys');
         for(key of allKeys) {
-            if(this.ifCollisionOccuredWith(key)) {
-                    console.log('====Collision with key ====');
+
+            if (this.collidesWith(key)) {
+
+                    console.log('==== Collision with key ====');
                     counterKeys+=100;
                     let index = allKeys.indexOf(key);
-                    console.log(`index to delete:' ${index}`);
                     key.clear(index);
-                    console.dir(allSelectors);
                     break;
-
-                    //this.goToStartPosition();
-
-
-                }
-
-           }
-        }
-    }
-    //check collision with blue gems
-    checkCollisionWithBlueGems(x,y) {
-        for(bluegem of allBlueGems) {
-            if(this.ifCollisionOccuredWith(bluegem)){
-                  console.log('====Collision with bluegem ====');
-                    this.goToStartPosition();
-              }
-          }
-    }
-
-    checkZoneWithOrangeBlue(x,y){
-        if (this.y > 839 && this.y < 1005){
-            console.log(' 839 and 1005 contact with water');
-            console.log ('=======================');
-            this.checkCollisionWithOrange();
-            this.checkCollisionWithBlueGems();
-
-        } else if(this.y > 42 && this.y < 208){
-            console.log(`player OY coordinates ${this.y}`);
-            console.log(`player y1 ${this.y1}`);
-            console.log(`player y2 ${this.y2}`);
-            //this.checkCollisionWithRock();
-            //this.checkCollisionWithOrange();
-            //this.checkCollisionWithBlueGems();
-        } //update actual coordinats for water blocks 42(1/2 height block)
-
-    }
-    checkCollisionWithStar(){
-        if(this.y1 >=-2 && this.y1 <= 83){
-            for(star of allStars){
-                console.log('=======Zone with Star===========');
-                    if(this.ifCollisionOccuredWith(star)) {
-                        console.log('=========Collision with Star============');
-                        counterStars+=200;
-                        let index = allStars.indexOf(star);
-                        console.log(`index to delete:' ${index}`);
-                        star.clear(index);
-                        console.dir(allStars);
-                        break;
-
-
-                }
-
             }
 
         }
     }
-    checkEndOfGame(){
-        //console.log(` Array with star (length) ${allStars.length}`);
-       if(allStars.length == 0){
-            //console.log(`========show modal window=======`);
-            modal.style.display = 'block';
+
+    checkCollisionWithStar() {
+
+        if (this.y1 < -2 || this.y1 > 83) return;
+
+        console.log('=======Zone with Star===========');
+
+        for(star of allStars) {
+
+            if (this.collidesWith(star)) {
+                console.log('=========Collision with Star============');
+                counterStars+=200;
+                let index = allStars.indexOf(star);
+                console.log(`index to delete:' ${index}`);
+                star.clear(index);
+                console.dir(allStars);
+                break;
+            }
+
         }
     }
-    checkCollisionWithRock(){
-        for(rock of allRocks){
-            if(this.ifCollisionOccuredWith(rock)){
-                console.log('=======collision with rocks==========');
-                } else {
-                console.log(`========== this is not a collision===========`);
+
+    checkCollisionWithOrange() {
+        //check coordinates with orange range 137 range 963
+
+        //console.log('==============Zone with Orange=================');
+        for (orange of allOranges) {
+
+            if(this.collidesWith(orange)) {
+
+                console.log('====Collision with orange ====');
+                this.goToStartPosition();
+
+            }
+        }
+    }
+
+    checkCollisionWithBlueGems() {
+
+        for (bluegem of allBlueGems) {
+
+            if (this.collidesWith(bluegem)) {
+
+                console.log('====Collision with bluegem ====');
                 this.goToStartPosition();
 
             }
@@ -263,35 +249,96 @@ class Player {
 
     }
 
-    checkCollisionSideByPlayer(){
+    checkCollisionWithOrangeAndBlueGems() {
+
+        if (this.y >= 1005) return;
+        if (this.y <= 42) return;
+        if (this.y <= 839 && this.y >= 208) return;
+
+        this.checkCollisionWithOrange();
+        this.checkCollisionWithBlueGems();
+
+        //update actual coordinats for water blocks 42(1/2 height block)
+
+    }
+
+    collidesWithRock() {
+
+        for (rock of allRocks) {
+
+            if (this.collidesWith(rock)) {
+
+                return true;
+            }
+        }
+
+
+        return false
+    }
+
+    checkCollisionWithWater() {
+
+        if (this.y <= 42 || this.y >= 208) return;
+
+        if (this.collidesWithRock()) {
+            console.log('===You saved on a rock===');
+            return;
+        }
+
+        console.log(`===You drowned in deep water===`);
+
+        // TODO counter of drowning
+        this.goToStartPosition();
+    }
+
+    checkCollisionWithEnemy() {
         //console.log(player.x1, player.x2);
-        for(let enemy of allEnemies){
+        for(let enemy of allEnemies) {
           // Here was the error !!!!!
           //if(!(enemy.x2 < this.x1 || enemy.x2 > this.x2)){
-            if(this.ifCollisionOccuredWith(enemy)){
-                    console.log('================================================');
-                    this.goToStartPosition();
-
+            if (this.collidesWith(enemy)) {
+                console.log('================================================');
+                this.goToStartPosition();
             }
         }
     }
 
-    update(){
-
-        this.moveTo(this.x + this.dx,this.y + this.dy);
-        this.checkEndOfGame();
-        this.checkCollisionWithKeys();
-        this.checkCollisionWithSelectors();
-        this.checkZoneWithOrangeBlue();
-        this.ifOutOfBoardGoToStartPosition();
-        //this.getNewPosition(this.y, maxPosition.y);
-        this.checkCollisionSideByPlayer();
-        this.checkCollisionWithStar();
-        this.dx = 0;
-        this.dy = 0;
+    checkEndOfGame() {
+        //console.log(` Array with star (length) ${allStars.length}`);
+       if(allStars.length == 0){
+            console.log(`========show modal window=======`);
+            modal.style.display = 'block';
+           //this.resetGame();
+        }
     }
 
-    render(){
+    resetGame() {
+        //allStars.length = 0;
+           allRocks.length = 0;
+           allEnemies.length = 0;
+           allSelectors.length = 0;
+           allBlueGems = 0;
+           allOranges = 0;
+           allKeys = 0;
+
+    }
+
+    update() {
+
+        this.moveTo(this.x + this.dx,this.y + this.dy);
+
+        this.checkCollisionWithOrangeAndBlueGems();
+        this.checkCollisionWithEnemy();
+        this.checkCollisionWithSelectors();
+        this.checkCollisionWithKeys();
+        this.checkCollisionWithWater();
+        this.checkCollisionWithStar();
+
+        this.checkEndOfGame();
+    }
+
+    render() {
+
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     }
@@ -318,50 +365,52 @@ class Player {
 
 //add to gamefield Selector
 class Selector {
-    constructor(x,y){
+
+    constructor(x,y) {
         this.setSelectorX(x);
         this.setSelectorY(y);
         this.sprite = 'images/Selector.png';
    }
 
-   setSelectorX(x){
+   setSelectorX(x) {
         this.x = x;
         this.x1 = this.x+1;  //actual position of figure stone by OX
         this.x2 = this.x1+100;
     }
 
-    setSelectorY(y){
+    setSelectorY(y) {
         this.y = y;
         this.y1 = this.y+90;  //actual position of fige stone by OY
         this.y2 = this.y1+80;
     }
 
 
-    render(){
+    render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    clear(index){
-        console.log('Trying to clear Selector...');
+    clear(index) {
+
         allSelectors.splice(index,1);
     }
 }
 
 
 class Key {
-    constructor(x, y){
+
+    constructor(x, y) {
         this.sprite = 'images/Key.png';
         this.setKeyY(y);
         this.setKeyX(x);
     }
-     setKeyY(y){
+     setKeyY(y) {
         // Enemy's Y coordinate stays the same during the game run
         this.y = y;
         this.y1 = this.y + 58;
         this.y2 = this.y1 + 84;
     }
 
-    setKeyX(x){
+    setKeyX(x) {
         this.x = x;
         // (x1,y1) - left upper point of the bug figure
         this.x1 = this.x + 30;
@@ -371,17 +420,19 @@ class Key {
     }
 
 
-    render(){
+    render() {
         //console.log (this.ctx);
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     }
-    clear(index){
-        console.log('Trying to clear Key...');
+
+    clear(index) {
+
         allKeys.splice(index,1);
     }
 
 }
+
 let generateKeys = function(maximumNumberOfItems, positionY){
     if(positionY===1){
             firstYCoordinate = 230;
@@ -394,24 +445,24 @@ let generateKeys = function(maximumNumberOfItems, positionY){
 
 };
 
-generateKeys(Math.round(Math.random()*4+0.5),1);
-generateKeys(Math.round(Math.random()*4+0.5),2);
 
+class Star {
 
-class Star{
-        constructor(x,y){
-            this.sprite = 'images/Star.png';
-            this.setStarY(y);
-            this.setStarX(x);
-        }
-     setStarY(y){
+    constructor(x,y){
+        this.sprite = 'images/Star.png';
+        this.setStarY(y);
+        this.setStarX(x);
+    }
+
+    setStarY(y){
         // Enemy's Y coordinate stays the same during the game run
         this.y = y;
         this.y1 = this.y + 65;
         this.y2 = this.y1 + 92;
     }
 
-    setStarX(x){
+    setStarX(x) {
+
         this.x = x;
         // (x1,y1) - left upper point of the bug figure
         this.x1 = this.x + 5;
@@ -425,10 +476,12 @@ class Star{
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     }
-    clear(index){
-          console.log('Trying to clear Star...');
-            allStars.splice(index,1);
-        }
+
+    clear(index) {
+
+        allStars.splice(index,1);
+
+    }
 }
 let generateStars = function(maximumNumberOfItems, firstYCoordinate){
     for(let i=0; i<maximumNumberOfItems; i++){
@@ -438,7 +491,7 @@ let generateStars = function(maximumNumberOfItems, firstYCoordinate){
     }
 };
 
-generateStars(Math.round(Math.random()*5+0.5), -2);
+//generateStars(Math.round(Math.random()*5+0.5), -2);
 
 //generateStars(1, -2);
 
@@ -478,26 +531,22 @@ let generateSelector = function(maximumNumberOfItems, positionOY){
     }
 
 };
-//generate stone in two positions
-generateSelector(Math.round((Math.random()*6 + 0.5)), 1);
-generateSelector(Math.round((Math.random()*6 + 0.5)), 2);
-//generateSelector(1, 1);
 
 class Orange {
-    constructor(x, y, speed){
+    constructor(x, y, speed) {
         this.sprite = 'images/Gem Orange.png';
         this.setOrangeX(x);
         this.setOrangeY(y);
         this.speed = speed;
     }
-    setOrangeY(y){
+    setOrangeY(y) {
         // Gemss Y coordinate stays the same during the game run
         this.y = y;
         this.y1 = this.y + 58;
         this.y2 = this.y1 + 104;
     }
 
-    setOrangeX(x){
+    setOrangeX(x) {
         this.x = x;
         // (x1,y1) - left upper point of the bug figure
         this.x1 = this.x + 3;
@@ -505,7 +554,7 @@ class Orange {
         this.x2 = this.x1 + 95;
     }
 
-    checkCoordinats(x,y,speed){
+    checkCoordinats(x,y,speed) {
         if (this.x >=1506){
             //this.speed = -this.speed;
             this.x = -100;
@@ -514,7 +563,7 @@ class Orange {
 
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
-    update(dt){
+    update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
@@ -532,7 +581,7 @@ class Orange {
 }
 
 class Rock {
-    constructor(x, y, speed){
+    constructor(x, y){
         this.sprite = 'images/Rock.png';
         this.setRockX(x);
         this.setRockY(y);
@@ -571,13 +620,6 @@ let generateRocks = function(maximumNumberOfItems, positionOY){
     }
 
 };
-//generate rocks in two positions
-generateRocks(Math.round((Math.random() + 0.5)), 2);
-generateRocks(Math.round((Math.random() + 0.5)), 2);// two rocks
-//generateRocks(Math.round((Math.random()*6 + 4.5)), 1);
-//generateRocks(Math.round((Math.random()*6 + 4.5)), 2);
-//generateSelector(1, 1);
-
 
 class BlueGem {
     constructor(x, y, speed){
@@ -633,10 +675,6 @@ let orangeRandom = function(maximumNumberOfItems,firstXCoordinate, firstYCoordin
         firstXCoordinate += 100;
     }
 };
-//the first range of oranges by OY 137
-orangeRandom(Math.round(Math.random()*5+0.5), -100, 137, 250);
-//the second range of oranges by OY 963
-orangeRandom(Math.round(Math.random()*5+0.5), -100, 963, 250);
 
 
 let blueRandom = function(maximumNumberOfItems,firstXCoordinate, firstYCoordinate, speed){
@@ -646,17 +684,44 @@ let blueRandom = function(maximumNumberOfItems,firstXCoordinate, firstYCoordinat
         firstXCoordinate += -100;
     }
 };
-//the first range of gems by OY 54
-blueRandom(Math.round(Math.random()*5+0.5),1415, 54, -350);
-//the second range of gems by OY 880
-blueRandom(Math.round(Math.random()*5+0.5),1415, 880, -350);
 
-let toGoStart = function(event){
+
+// this is additional function, it generates all instances
+let startGame = function(star, key, orange, bluegem, selector, enemy, rock){
+    generateStars(Math.round(Math.random()*5+0.5), -2);
+    generateStars(Math.round(Math.random()*5+0.5), -2);
+    //the first range of gems by OY 54
+    blueRandom(Math.round(Math.random()*5+0.5),1415, 54, -350);
+    //the second range of gems by OY 880
+    blueRandom(Math.round(Math.random()*5+0.5),1415, 880, -350);
+    //the first range of oranges by OY 137
+    orangeRandom(Math.round(Math.random()*5+0.5), -100, 137, 250);
+    //the second range of oranges by OY 963
+    orangeRandom(Math.round(Math.random()*5+0.5), -100, 963, 250);
+    //generate rocks in two positions
+    generateRocks(Math.round((Math.random() + 0.5)), 2);
+    generateRocks(Math.round((Math.random() + 0.5)), 2);// two rocks
+    //generate stone in two positions
+    generateSelector(Math.round((Math.random()*6 + 0.5)), 1);
+    generateSelector(Math.round((Math.random()*6 + 0.5)), 2);
+    //generateSelector(1, 1);
+    generateKeys(Math.round(Math.random()*4+0.5),1);
+    generateKeys(Math.round(Math.random()*4+0.5),2);
+
+}();
+
+let toGoStart = function(event, star){
     alert('Hura!');
+    //generateStars((Math.round(Math.random()*5+0.5), -2));
+    //allStars.push(star);
+    //allStars.length = 1;
     let pressElement = event.target;
     let newElement = pressElement.parentElement.parentElement;
     console.log(newElement);
     newElement.classList.add('hide');
+    //player.resetGame();
+    //startGame();
+
     //console.log(reload);
 
 
